@@ -10,6 +10,13 @@ interface UserAttributes {
   lname: string;
   photourl?: string;
   bio?: string;
+  address1?: string;
+  address2?: string;
+  address3?: string;
+  city?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
 
   password: string;
   adminLevel: number;
@@ -50,6 +57,13 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public lname!: string
   public photourl: string
   public bio: string
+  public address1: string;
+  public address2: string;
+  public address3: string;
+  public city: string;
+  public province: string;
+  public postalCode: string;
+  public country: string;
 
   public password!: string;
   public adminLevel!: number;
@@ -92,6 +106,27 @@ User.init({
   bio: {
     type: DataTypes.TEXT
   },
+  address1: {
+    type: DataTypes.STRING
+  },
+  address2: {
+    type: DataTypes.STRING
+  },
+  address3: {
+    type: DataTypes.STRING
+  },
+  city: {
+    type: DataTypes.STRING
+  },
+  province: {
+    type: DataTypes.STRING
+  },
+  postalCode: {
+    type: DataTypes.STRING
+  },
+  country: {
+    type: DataTypes.STRING
+  },
 
   password: {
     type: DataTypes.STRING,
@@ -116,7 +151,7 @@ User.init({
   paranoid: true,
   hooks: {
     beforeCreate: async function (user, options) {
-      user.password = await this.hashPassword(user.password)
+      user.password = await user.hashPassword(user.password)
     }
   }
 })

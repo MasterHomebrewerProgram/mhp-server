@@ -34,7 +34,7 @@ export const getUser = async (userId: string): Promise<SanitizedUserOutput> => {
 export const registerUser = async (userData: UserInput & {password : string}): Promise<SanitizedUserOutput> => {
   userData.email = userData.email.toLocaleLowerCase()
 
-  const existingUser = User.findOne({ where: { email: userData.email } })
+  const existingUser = await User.findOne({ where: { email: userData.email } })
 
   // Check if user email already exists
   if (!!existingUser) {
@@ -67,6 +67,13 @@ export const registerUser = async (userData: UserInput & {password : string}): P
     lname: userData.lname,
     photourl: userData.photourl,
     bio: userData.bio,
+    address1: userData.address1,
+    address2: userData.address2,
+    address3: userData.address3,
+    city: userData.city,
+    province: userData.province,
+    postalCode: userData.postalCode,
+    country: userData.country,
     password: userData.password,
     emailVerified: false,
     emailVerificationCode: emailVerificationCode,
@@ -76,10 +83,26 @@ export const registerUser = async (userData: UserInput & {password : string}): P
   return newUser.sanitize()
 }
 
-export const validateEmail = async (userId: string, verificationCode: string): Promise<SanitizedUserOutput> => {
+export const updateUser = async (userData: UserInput & {password? : string}): Promise<SanitizedUserOutput> => {
+  userData.email = userData.email.toLocaleLowerCase()
+
+  const existingUser = await User.findOne({ where: { email: userData.email } })
+
+  // Check if user email already exists
+  if (!existingUser) {
+    return Promise.reject({
+      message: "User not found"
+    });
+  }
+
+  const user = await existingUser.update(userData)
+
+  return user.sanitize()
+}
+
+export const validateEmail = async (verificationCode: string): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
     where: {
-      id: userId,
       emailVerificationCode: verificationCode
     }
   })
