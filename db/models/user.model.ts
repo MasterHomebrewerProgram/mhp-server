@@ -1,7 +1,11 @@
-var bcrypt = require("bcrypt");
-
+import bcrypt from "bcrypt"
 import { DataTypes, Model, Optional } from 'sequelize'
+
 import sequelizeConnection from '../config'
+import Club from './club.model';
+import Scoresheet from "./scoresheet.model";
+import Rank, { Rank_User } from "./rank.model";
+import Award, { Award_User } from "./award.model";
 
 interface UserAttributes {
   id: string;
@@ -178,5 +182,24 @@ User.prototype.sanitize = async function(): Promise<SanitizedUserOutput> {
 
   return user
 }
+
+User.belongsTo(Club)
+User.belongsToMany(Rank, {through: Rank_User})
+User.belongsToMany(Award, {through: Award_User})
+User.hasMany(Scoresheet)
+Scoresheet.belongsTo(User)
+
+Rank.belongsToMany(User, {through: Rank_User})
+Rank_User.belongsTo(User, {
+  foreignKey: {
+    name: "approvedby"
+  }
+})
+Award.belongsToMany(User, {through: Award_User})
+Award_User.belongsTo(User, {
+  foreignKey: {
+    name: "approvedby"
+  }
+})
 
 export default User
