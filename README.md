@@ -1,4 +1,7 @@
 # MHP Server
 
 ### Quickstart
-* `npm run dev`
+```bash
+export NODE_ENV=development
+npm run dev
+```

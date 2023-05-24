@@ -1,34 +1,36 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import Club from './club.model';
+import Scoresheet from './scoresheet.model';
 
-interface ClubAttributes {
+interface CompAttributes {
   id: string;
   name: string;
   url?: string;
-  bio?: string;
+  description?: string;
   photourl?: string;
   city?: string;
   province?: string;
   country?: string;
 }
 
-export interface ClubInput extends Optional<
-ClubAttributes,
+export interface CompInput extends Optional<
+CompAttributes,
  'id' | 
  'url' |
  'photourl' |
- 'bio' |
+ 'description' |
  'city' |
  'province' |
  'country'
 > {}
-export interface ClubOutput extends Required<ClubAttributes> {}
+export interface CompOutput extends Required<CompAttributes> {}
 
-class Club extends Model<ClubAttributes, ClubInput> implements ClubAttributes {
+class Comp extends Model<CompAttributes, CompInput> implements CompAttributes {
   public id!: string;
   public name!: string;
   public url: string;
-  public bio: string;
+  public description: string;
   public photourl: string;
   public city: string;
   public province: string;
@@ -39,7 +41,7 @@ class Club extends Model<ClubAttributes, ClubInput> implements ClubAttributes {
   public readonly deletedAt!: Date;
 }
 
-Club.init({
+Comp.init({
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -49,12 +51,12 @@ Club.init({
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   url: {
     type: DataTypes.TEXT
   },
-  bio: {
+  description: {
     type: DataTypes.TEXT
   },
   photourl: {
@@ -75,7 +77,4 @@ Club.init({
   paranoid: true
 })
 
-// Club.hasMany(User)
-// Club.hasMany(Comp)
-
-export default Club
+export default Comp

@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 import sequelizeConnection from '../config'
-import User from './user.model'
 import Scoresheet from './scoresheet.model'
 import Style from './style.model'
 
@@ -48,7 +47,8 @@ Award.init({
     allowNull: false,
   },
   name: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    unique: true
   },
   description: {
     type: DataTypes.TEXT

@@ -40,7 +40,8 @@ Style.init({
     type: DataTypes.STRING
   },
   name: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    unique: true
   },
 }, {
   timestamps: true,
