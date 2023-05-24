@@ -1,7 +1,14 @@
-import User from './models/user.model'
+import sequelizeConnection from './config'
+import { runAwardSeeds } from './seed'
 const isDev = process.env.NODE_ENV === 'development'
 
-const dbInit = () => {
-  User.sync({ alter: isDev })
+const dbInit = async () => {
+  console.log("Initializing DB...")
+
+  await sequelizeConnection.sync({
+    alter: isDev
+  })
+
+  await runAwardSeeds()
 }
 export default dbInit 

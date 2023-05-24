@@ -5,6 +5,7 @@ import crypto from 'crypto'
 import passport from 'passport'
 
 import sequelizeConnection from './../db/config'
+import dbInit from '../db/init';
 import v1 from './v1'
 
 // Set up persistent sessions
@@ -31,9 +32,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Sync database
-sequelizeConnection.sync({
-  force: process.env.NODE_ENV === 'development'
-})
+dbInit()
 
 // API definitions
 app.use(express.static('public'))

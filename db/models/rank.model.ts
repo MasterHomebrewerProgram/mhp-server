@@ -1,6 +1,8 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 import sequelizeConnection from '../config'
 import User from './user.model'
+import Scoresheet from './scoresheet.model'
+import Style from './style.model'
 
 interface RankAttributes {
   id: string
@@ -8,6 +10,15 @@ interface RankAttributes {
   description: string
   photourl?: string
   priority: number
+  evalFnText: string
+}
+
+export interface RankProgress {
+  achieved: boolean
+  approved?: boolean
+  requirements?: {
+    [requirement: string]: number
+  }
 }
 
 export interface RankInput extends Optional<
@@ -22,10 +33,13 @@ class Rank extends Model<RankAttributes, RankInput> implements RankAttributes {
   public description!: string
   public photourl: string
   public priority: number
+  public evalFnText: string
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
+
+  public checkRanks: (scoresheets: Array<Scoresheet & {Style: Style}>) => RankProgress
 }
 
 Rank.init({
@@ -47,11 +61,20 @@ Rank.init({
   priority: {
     type: DataTypes.INTEGER
   },
+  evalFnText: {
+    type: DataTypes.TEXT
+  }
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,
   paranoid: true
 })
+
+Rank.prototype.checkRanks= function (scoresheets: Array<Scoresheet & {Style: Style}>): RankProgress {
+  const evalFn = eval(this.evalFnText)
+
+  return evalFn(scoresheets)
+}
 
 // Join table for rank <-> user
 interface Rank_User_Attributes {

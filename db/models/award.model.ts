@@ -1,12 +1,23 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 import sequelizeConnection from '../config'
 import User from './user.model'
+import Scoresheet from './scoresheet.model'
+import Style from './style.model'
 
 interface AwardAttributes {
   id: string
   name: string
   description: string
   photourl?: string
+  evalFnText: string
+}
+
+export interface AwardProgress {
+  achieved: boolean
+  sheetsApproved?: boolean
+  requirements?: {
+    [requirement: string]: number
+  }
 }
 
 export interface AwardInput extends Optional<
@@ -20,10 +31,13 @@ class Award extends Model<AwardAttributes, AwardInput> implements AwardAttribute
   public name!: string
   public description!: string
   public photourl: string
+  public evalFnText: string
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
+
+  public checkAwards: (scoresheets: Array<Scoresheet & {Style: Style}>) => AwardProgress
 }
 
 Award.init({
@@ -41,12 +55,21 @@ Award.init({
   },
   photourl: {
     type: DataTypes.STRING
-  }
+  },
+  evalFnText: {
+    type: DataTypes.TEXT
+  },
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,
   paranoid: true
 })
+
+Award.prototype.checkAwards = function (scoresheets: Array<Scoresheet & {Style: Style}>): AwardProgress {
+  const evalFn = eval(this.evalFnText)
+
+  return evalFn(scoresheets)
+}
 
 // Join table for Award <-> user
 interface Award_User_Attributes {

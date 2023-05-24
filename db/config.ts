@@ -4,7 +4,8 @@ let sequelizeConnection
 if (process.env.NODE_ENV === "development") {
   sequelizeConnection = new Sequelize({
     dialect: 'sqlite',
-    storage: 'database.sqlite3'
+    storage: 'database.sqlite3',
+    logging: false
   })
 } else {
   const dbName = process.env.DB_NAME as string
