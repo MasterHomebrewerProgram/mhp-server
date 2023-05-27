@@ -12,6 +12,7 @@ import sequelizeConnection from '../config'
 interface UserAttributes {
   id: string;
   email: string;
+  slug: string
   fname: string;
   lname: string;
   photourl?: string;
@@ -59,6 +60,7 @@ export type SanitizedUserOutput = Omit<
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public id!: string
   public email!: string
+  public slug!: string
   public fname!: string
   public lname!: string
   public photourl: string
@@ -94,6 +96,11 @@ User.init({
     allowNull: false,
   },
   email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  slug: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
@@ -184,29 +191,5 @@ User.prototype.sanitize = async function(): Promise<SanitizedUserOutput> {
 
   return user
 }
-
-// User.belongsTo(Club)
-// User.belongsToMany(Rank, {through: Rank_User})
-// User.belongsToMany(Award, {through: Award_User})
-// User.hasMany(Scoresheet)
-// Scoresheet.belongsTo(User)
-
-// Rank.belongsToMany(User, {through: Rank_User})
-// Rank_User.belongsTo(User, {
-//   foreignKey: {
-//     name: "approvedby"
-//   }
-// })
-// Award.belongsToMany(User, {through: Award_User})
-// Award_User.belongsTo(User, {
-//   foreignKey: {
-//     name: "approvedby"
-//   }
-// })
-
-// Comp.belongsTo(Club)
-// Scoresheet.belongsTo(Comp)
-
-// Circuit.belongsToMany(Comp, {through: Comp_Circuit})
 
 export default User

@@ -15,7 +15,7 @@ const dbInit = async () => {
   console.log("Initializing DB...")
 
   // Set up database relations
-  User.belongsTo(Club)
+  Club.hasMany(User)
   User.belongsToMany(Rank, {through: Rank_User})
   User.belongsToMany(Award, {through: Award_User})
   User.hasMany(Scoresheet)

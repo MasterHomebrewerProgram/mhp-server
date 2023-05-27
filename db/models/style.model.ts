@@ -7,6 +7,10 @@ interface StyleAttributes {
   cat: string
   subcat: string
   name: string
+  isCider?: boolean
+  isMead?: boolean
+  isLager?: boolean
+  isSour?: boolean
 }
 
 export interface StyleInput extends Optional<
@@ -20,6 +24,10 @@ class Style extends Model<StyleAttributes, StyleInput> implements StyleAttribute
   public cat!: string
   public subcat!: string
   public name!: string
+  public isCider?: boolean
+  public isMead?: boolean
+  public isLager?: boolean
+  public isSour?: boolean
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -42,6 +50,18 @@ Style.init({
   name: {
     type: DataTypes.TEXT,
     unique: true
+  },
+  isCider: {
+    type: DataTypes.BOOLEAN,
+  },
+  isMead: {
+    type: DataTypes.BOOLEAN,
+  },
+  isLager: {
+    type: DataTypes.BOOLEAN,
+  },
+  isSour: {
+    type: DataTypes.BOOLEAN,
   },
 }, {
   timestamps: true,

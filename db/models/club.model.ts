@@ -4,6 +4,7 @@ import sequelizeConnection from '../config'
 interface ClubAttributes {
   id: string;
   name: string;
+  slug: string;
   url?: string;
   bio?: string;
   photourl?: string;
@@ -27,6 +28,7 @@ export interface ClubOutput extends Required<ClubAttributes> {}
 class Club extends Model<ClubAttributes, ClubInput> implements ClubAttributes {
   public id!: string;
   public name!: string;
+  public slug!: string;
   public url: string;
   public bio: string;
   public photourl: string;
@@ -47,6 +49,11 @@ Club.init({
     allowNull: false,
   },
   name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  slug: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
