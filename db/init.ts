@@ -1,5 +1,5 @@
 import sequelizeConnection from './config'
-import { runAwardSeeds } from './seed'
+import {runAwardSeeds} from "./seed/award"
 const isDev = process.env.NODE_ENV === 'development'
 
 import User from './models/user.model';

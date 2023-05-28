@@ -17,6 +17,7 @@ export interface AwardProgress {
   requirements?: {
     [requirement: string]: number
   }
+  totalRequirements?: number
 }
 
 export interface AwardInput extends Optional<

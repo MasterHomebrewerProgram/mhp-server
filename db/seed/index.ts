@@ -1,1 +1,1 @@
-export * from "./award.seed"
+export * from "./award/award.seed"
