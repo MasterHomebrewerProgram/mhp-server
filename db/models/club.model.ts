@@ -82,7 +82,35 @@ Club.init({
   paranoid: true
 })
 
-// Club.hasMany(User)
-// Club.hasMany(Comp)
+interface Club_User_Attributes {
+  id: string,
+  clubAdmin: number
+}
+
+export class Club_User extends Model<Club_User_Attributes> implements Club_User_Attributes {
+  public id!: string
+  public clubAdmin: number
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+  public readonly deletedAt!: Date;
+}
+
+Club_User.init({
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    allowNull: false,
+  },
+  clubAdmin: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  }
+}, {
+  timestamps: true,
+  sequelize: sequelizeConnection,
+  paranoid: true
+})
 
 export default Club

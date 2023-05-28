@@ -57,6 +57,4 @@ Scoresheet.init({
   paranoid: true
 })
 
-// Style.hasMany(Scoresheet)
-
 export default Scoresheet

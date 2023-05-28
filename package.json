@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "dev": "nodemon src/app.ts",
+    "dev": "export NODE_ENV=development && nodemon src/app.ts",
     "lint": "eslint . --ext .ts",
     "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

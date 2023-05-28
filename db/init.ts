@@ -3,7 +3,7 @@ import {runAwardSeeds, runRankSeeds, runStarSeeds, runStyleSeeds} from "./seed"
 const isDev = process.env.NODE_ENV === 'development'
 
 import User from './models/user.model';
-import Club from './models/club.model';
+import Club, { Club_User } from './models/club.model';
 import Scoresheet from "./models/scoresheet.model";
 import Style from "./models/style.model"
 import Rank, { Rank_User } from "./models/rank.model";
@@ -16,7 +16,7 @@ const dbInit = async () => {
   console.log("Initializing DB...")
 
   // Set up database relations
-  Club.hasMany(User)
+  User.belongsToMany(Club, {through: Club_User})
   User.belongsToMany(Rank, {through: Rank_User})
   User.belongsToMany(Award, {through: Award_User})
   User.hasMany(Scoresheet)
@@ -44,13 +44,19 @@ const dbInit = async () => {
   Circuit.belongsToMany(Comp, {through: Comp_Circuit})
   Style.hasMany(Scoresheet)
 
+  console.log("\nSetting up schema...\n")
+
   await sequelizeConnection.sync({
     force: isDev
   })
+
+  console.log("\nRunning seeds...\n")
 
   await runAwardSeeds()
   await runRankSeeds()
   await runStarSeeds()
   await runStyleSeeds()
+
+  console.log("\nDone seeding!\n")
 }
 export default dbInit 
