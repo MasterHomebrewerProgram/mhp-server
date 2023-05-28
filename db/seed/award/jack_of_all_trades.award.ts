@@ -24,8 +24,14 @@ const evalFn = (scoresheets: Array<Scoresheet & {Style: Style}>): AwardProgress 
   return {
     achieved: Object.keys(requirements).length === 0,
     sheetsApproved,
-    requirements,
-    totalRequirements: 43
+    requirements: [
+      {
+        description: "Required categories",
+        categories: Object.keys(requirements),
+        completed: 43 - Object.keys(requirements).length,
+        total: 43
+      }
+    ]
   }
 }
 

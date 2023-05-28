@@ -15,9 +15,11 @@ export interface AwardProgress {
   achieved: boolean
   sheetsApproved?: boolean
   requirements?: {
-    [requirement: string]: number
-  }
-  totalRequirements?: number
+    description: string,
+    categories?: string[],
+    completed: number,
+    total: number
+  }[]
 }
 
 export interface AwardInput extends Optional<

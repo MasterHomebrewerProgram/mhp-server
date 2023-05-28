@@ -15,10 +15,13 @@ interface RankAttributes {
 
 export interface RankProgress {
   achieved: boolean
-  approved?: boolean
+  sheetsApproved?: boolean
   requirements?: {
-    [requirement: string]: number
-  }
+    description: string,
+    categories?: string[],
+    completed: number,
+    total: number
+  }[]
 }
 
 export interface RankInput extends Optional<

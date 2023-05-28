@@ -32,12 +32,13 @@ const evalFn = (scoresheets: Array<Scoresheet & {Style: Style}>): AwardProgress 
     "10C" : true,
     "23A" : true, 
     "23G" : true,
-    "27A8" : true, //Roggenbier
-    "27A3" : true, //Lichtenhainer
-    "27A5" : true, //Piwo Grodziskie
-    "27A1": true //Kellerbier
+    "27H" : true, 
+    "27C" : true, 
+    "27E" : true, 
+    "27A": true 
   }
 
+  // Filter by allowed categories and score >= 43
   const filteredByCategory = scoresheets.filter(
     (scoresheet:Scoresheet & {Style: Style}) => scoresheet.score >= 43 && categories[scoresheet.Style.cat + scoresheet.Style.subcat]
   )
@@ -56,9 +57,7 @@ const evalFn = (scoresheets: Array<Scoresheet & {Style: Style}>): AwardProgress 
   if (Object.keys(indexedSheets).length >= 10 ) {
     return {
       achieved: true,
-      sheetsApproved: true,
-      requirements: {},
-      totalRequirements: 10
+      sheetsApproved: true
     }
   }
 
@@ -75,18 +74,19 @@ const evalFn = (scoresheets: Array<Scoresheet & {Style: Style}>): AwardProgress 
     return {
       achieved: true,
       sheetsApproved: false,
-      requirements: {},
-      totalRequirements: 10
     }
   }
 
+  // Third pass - award not valid
   return {
     achieved: false,
     sheetsApproved: false,
-    requirements: {
-      "category": 10 - Object.keys(indexedSheets).length
-    },
-    totalRequirements: 10
+    requirements: [{
+      description: "43+",
+      categories: Object.keys(categories).filter(category => !Object.keys(indexedSheets).includes(category)),
+      completed: Object.keys(indexedSheets).length,
+      total: 10
+    }]
   }
 }
 
