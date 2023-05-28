@@ -11,12 +11,14 @@ interface seedFile {
   evalFn: (scoresheets: Array<Scoresheet & {Style: Style}>) => AwardProgress
 }
 
-const seedAward = async (input: seedFile) => {
+const seedAward = async (input: seedFile, force=false) => {
   const awardExists = await Award.findOne({
     where: { name: input.name}
   })
 
-  if (awardExists) return
+  // Don't overwrite existing awards unless force enabled
+  if (!force && awardExists) return
+
   console.log(`Seeding ${input.name} award config`)
 
   // Create entry

@@ -66,7 +66,13 @@ Style.init({
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,
-  paranoid: true
+  paranoid: true,
+  indexes: [
+    {
+      fields: ['cat', 'subcat'],
+      unique: true
+    }
+  ]
 })
 
 export default Style

@@ -1,5 +1,5 @@
 import sequelizeConnection from './config'
-import {runAwardSeeds} from "./seed/award"
+import {runAwardSeeds, runRankSeeds, runStarSeeds, runStyleSeeds} from "./seed"
 const isDev = process.env.NODE_ENV === 'development'
 
 import User from './models/user.model';
@@ -8,6 +8,7 @@ import Scoresheet from "./models/scoresheet.model";
 import Style from "./models/style.model"
 import Rank, { Rank_User } from "./models/rank.model";
 import Award, { Award_User } from "./models/award.model";
+import Star, { Star_User } from "./models/star.model";
 import Comp from "./models/comp.model";
 import Circuit, {Comp_Circuit} from "./models/circuit.model";
 
@@ -32,6 +33,12 @@ const dbInit = async () => {
       name: "approvedby"
     }
   })
+  Star.belongsToMany(User, {through: Star_User})
+  Award_User.belongsTo(User, {
+    foreignKey: {
+      name: "approvedby"
+    }
+  })
   Comp.belongsTo(Club)
   Scoresheet.belongsTo(Comp)
   Circuit.belongsToMany(Comp, {through: Comp_Circuit})
@@ -42,5 +49,8 @@ const dbInit = async () => {
   })
 
   await runAwardSeeds()
+  await runRankSeeds()
+  await runStarSeeds()
+  await runStyleSeeds()
 }
 export default dbInit 
