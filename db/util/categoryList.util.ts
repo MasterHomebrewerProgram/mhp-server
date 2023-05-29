@@ -1,3 +1,14 @@
+export const mixedFermentationSours = [
+  '23A',
+  '23B',
+  '23C',
+  '23D',
+  '23E',
+  '23F',
+  '28B',
+  '28C'
+]
+
 export default [
 
   // BEERS

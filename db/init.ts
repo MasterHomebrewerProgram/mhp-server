@@ -11,6 +11,7 @@ import Award, { Award_User } from "./models/award.model";
 import Star, { Star_User } from "./models/star.model";
 import Comp from "./models/comp.model";
 import Circuit, {Comp_Circuit} from "./models/circuit.model";
+import Rating from "./models/rating.model"
 
 const dbInit = async () => {
   console.log("Initializing DB...")
@@ -21,6 +22,7 @@ const dbInit = async () => {
   User.belongsToMany(Award, {through: Award_User})
   User.hasMany(Scoresheet)
   Scoresheet.belongsTo(User)
+  User.hasMany(Rating)
   Rank.belongsToMany(User, {through: Rank_User})
   Rank_User.belongsTo(User, {
     foreignKey: {
@@ -43,6 +45,7 @@ const dbInit = async () => {
   Scoresheet.belongsTo(Comp)
   Circuit.belongsToMany(Comp, {through: Comp_Circuit})
   Style.hasMany(Scoresheet)
+  Comp.hasMany(Rating)
 
   console.log("\nSetting up schema...\n")
 

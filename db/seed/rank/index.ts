@@ -1,54 +1,264 @@
-import Rank, { RankProgress } from '../../models/rank.model'
-import Scoresheet from '../../models/scoresheet.model'
-import Style from '../../models/style.model'
+import Rank from '../../models/rank.model'
+import categoryList from '../../util/categoryList.util'
 
-import Novice from './novice.rank'
-import Apprentice from './apprentice.rank'
-import Proficient from './proficient.rank'
-import Recognized from './recognized.rank'
-import Distinguished from './distinguished.rank'
-import Master from './master.rank'
-import Grandmaster1 from './grandmaster1.rank'
-import Grandmaster2 from './grandmaster2.rank'
-import Grandmaster3 from './grandmaster3.rank'
-import Grandmaster4 from './grandmaster4.rank'
-import Grandmaster5 from './grandmaster5.rank'
-
-interface seedFile {
-  name: string,
-  description: string,
-  evalFn: (scoresheets: Array<Scoresheet & {Style: Style}>) => RankProgress
-}
-
-const seedRank = async (input: seedFile, force=false) => {
-  const awardExists = await Rank.findOne({
-    where: { name: input.name}
+export const runRankSeeds = async () => {
+  return await Rank.bulkCreate([
+    {
+      name: "Novice",
+      description: "",
+      priority: 10,
+      minScore: 21,
+      minSubcats: 5,
+      minCats: 4,
+      minSlmc: 0,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Apprentice",
+      description: "",
+      priority: 20,
+      minScore: 21,
+      minSubcats: 10,
+      minCats: 7,
+      minSlmc: 1,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Proficient",
+      description: "",
+      priority: 30,
+      minScore: 30,
+      minSubcats: 10,
+      minCats: 7,
+      minSlmc: 2,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Recognized",
+      description: "",
+      priority: 40,
+      minScore: 30,
+      minSubcats: 15,
+      minCats: 10,
+      minSlmc: 3,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Distinguished",
+      description: "",
+      priority: 50,
+      minScore: 38,
+      minSubcats: 15,
+      minCats: 11,
+      minSlmc: 2,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Master",
+      description: "",
+      priority: 60,
+      minScore: 38,
+      minSubcats: 20,
+      minCats: 15,
+      minSlmc: 4,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Grand Master I",
+      description: "",
+      priority: 70,
+      minScore: 43,
+      minSubcats: 10,
+      minCats: 5,
+      minSlmc: 2,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Grand Master II",
+      description: "",
+      priority: 80,
+      minScore: 43,
+      minSubcats: 15,
+      minCats: 7,
+      minSlmc: 4,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Grand Master III",
+      description: "",
+      priority: 90,
+      minScore: 43,
+      minSubcats: 20,
+      minCats: 9,
+      minSlmc: 5,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Grand Master IV",
+      description: "",
+      priority: 100,
+      minScore: 43,
+      minSubcats: 25,
+      minCats: 11,
+      minSlmc: 6,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Grand Master V",
+      description: "",
+      priority: 110,
+      minScore: 43,
+      minSubcats: 30,
+      minCats: 13,
+      minSlmc: 7,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Grand Master VI",
+      description: "",
+      priority: 120,
+      minScore: 43,
+      minSubcats: 35,
+      minCats: 15,
+      minSlmc: 0,
+      minLagers: 5,
+      minSours: 1,
+      minMixedSours: 0,
+      minMeads: 1,
+      minCiders: 1
+    },
+    {
+      name: "Grand Master VII",
+      description: "",
+      priority: 130,
+      minScore: 43,
+      minSubcats: 40,
+      minCats: 17,
+      minSlmc: 0,
+      minLagers: 5,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 2,
+      minCiders: 1
+    },
+    {
+      name: "Grand Master VIII",
+      description: "",
+      priority: 140,
+      minScore: 43,
+      minSubcats: 45,
+      minCats: 19,
+      minSlmc: 0,
+      minLagers: 6,
+      minSours: 2,
+      minMixedSours: 1,
+      minMeads: 2,
+      minCiders: 2
+    },
+    {
+      name: "Grand Master IX",
+      description: "",
+      priority: 150,
+      minScore: 43,
+      minSubcats: 50,
+      minCats: 21,
+      minSlmc: 0,
+      minLagers: 6,
+      minSours: 2,
+      minMixedSours: 1,
+      minMeads: 3,
+      minCiders: 3
+    },
+    {
+      name: "Grand Master X",
+      description: "",
+      priority: 160,
+      minScore: 43,
+      minSubcats: 55,
+      minCats: 23,
+      minSlmc: 0,
+      minLagers: 7,
+      minSours: 3,
+      minMixedSours: 1,
+      minMeads: 3,
+      minCiders: 3
+    },
+    {
+      name: "Legendary Master",
+      description: "",
+      priority: 170,
+      minScore: 43,
+      minSubcats: 0,
+      minCats: Object.keys(categoryList.reduce((acc, val) => {
+        acc[val.cat] = true
+        return acc
+      }, {})).length,
+      minSlmc: 0,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    },
+    {
+      name: "Supreme Master of Brewing",
+      description: "",
+      priority: 180,
+      minScore: 43,
+      minSubcats: categoryList.length,
+      minCats: 0,
+      minSlmc: 0,
+      minLagers: 0,
+      minSours: 0,
+      minMixedSours: 0,
+      minMeads: 0,
+      minCiders: 0
+    }    
+  ], {
+    ignoreDuplicates: true
   })
-
-  // Don't overwrite existing awards unless force enabled
-  if (!force && awardExists) return
-
-  console.log(`Seeding ${input.name} rank config`)
-
-  // Create entry
-  await Rank.create({
-    name: input.name,
-    description: input.description,
-    photourl: "",
-    evalFnText: input.evalFn.toString()
-  })
-}
-
-export const runRankSeeds = () => {
-  seedRank(Novice)
-  seedRank(Apprentice)
-  seedRank(Proficient)
-  seedRank(Recognized)
-  seedRank(Distinguished)
-  seedRank(Master)
-  seedRank(Grandmaster1)
-  seedRank(Grandmaster2)
-  seedRank(Grandmaster3)
-  seedRank(Grandmaster4)
-  seedRank(Grandmaster5)
 }

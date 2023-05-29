@@ -1,8 +1,5 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 import sequelizeConnection from '../config'
-import User from './user.model'
-import Scoresheet from './scoresheet.model'
-import Style from './style.model'
 
 interface RankAttributes {
   id: string
@@ -10,7 +7,15 @@ interface RankAttributes {
   description: string
   photourl?: string
   priority: number
-  evalFnText: string
+  minScore?: number
+  minSubcats?: number
+  minCats?: number
+  minSlmc?: number
+  minLagers?: number
+  minSours?: number
+  minMixedSours?: number
+  minMeads?: number
+  minCiders?: number
 }
 
 export interface RankProgress {
@@ -36,13 +41,19 @@ class Rank extends Model<RankAttributes, RankInput> implements RankAttributes {
   public description!: string
   public photourl: string
   public priority: number
-  public evalFnText: string
+  public minScore: number
+  public minSubcats: number
+  public minCats: number
+  public minSlmc: number
+  public minLagers: number
+  public minSours: number
+  public minMixedSours: number
+  public minMeads: number
+  public minCiders: number
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
-
-  public checkRanks: (scoresheets: Array<Scoresheet & {Style: Style}>) => RankProgress
 }
 
 Rank.init({
@@ -65,20 +76,47 @@ Rank.init({
   priority: {
     type: DataTypes.INTEGER
   },
-  evalFnText: {
-    type: DataTypes.TEXT
-  }
+  minScore: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minSubcats: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minCats: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minSlmc: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minLagers: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minSours: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minMixedSours: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minMeads: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  minCiders: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,
   paranoid: true
 })
-
-Rank.prototype.checkRanks= function (scoresheets: Array<Scoresheet & {Style: Style}>): RankProgress {
-  const evalFn = eval(this.evalFnText)
-
-  return evalFn(scoresheets)
-}
 
 // Join table for rank <-> user
 interface Rank_User_Attributes {
