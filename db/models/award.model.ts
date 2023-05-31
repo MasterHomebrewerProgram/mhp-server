@@ -8,7 +8,9 @@ interface AwardAttributes {
   name: string
   description: string
   photourl?: string
-  evalFnText: string
+  categoryList: string[]
+  minScore?: number
+  minRequired?: number
 }
 
 export interface AwardProgress {
@@ -33,7 +35,9 @@ class Award extends Model<AwardAttributes, AwardInput> implements AwardAttribute
   public name!: string
   public description!: string
   public photourl: string
-  public evalFnText: string
+  public categoryList: string[]
+  public minScore?: number
+  public minRequired?: number
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -59,20 +63,20 @@ Award.init({
   photourl: {
     type: DataTypes.STRING
   },
-  evalFnText: {
-    type: DataTypes.TEXT
+  categoryList: {
+    type: DataTypes.JSON
+  },
+  minScore: {
+    type: DataTypes.STRING
+  },
+  minRequired: {
+    type: DataTypes.STRING
   },
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,
   paranoid: true
 })
-
-Award.prototype.checkAwards = function (scoresheets: Array<Scoresheet & {Style: Style}>): AwardProgress {
-  const evalFn = eval(this.evalFnText)
-
-  return evalFn(scoresheets)
-}
 
 // Join table for Award <-> user
 interface Award_User_Attributes {
