@@ -11,6 +11,7 @@ interface AwardAttributes {
   categoryList: string[]
   minScore?: number
   minRequired?: number
+  preventCategoryDuplicates?: boolean
 }
 
 export interface AwardProgress {
@@ -38,6 +39,7 @@ class Award extends Model<AwardAttributes, AwardInput> implements AwardAttribute
   public categoryList: string[]
   public minScore?: number
   public minRequired?: number
+  public preventCategoryDuplicates?: boolean
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -72,6 +74,10 @@ Award.init({
   minRequired: {
     type: DataTypes.STRING
   },
+  preventCategoryDuplicates: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  }
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,

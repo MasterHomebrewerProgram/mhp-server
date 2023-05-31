@@ -2,10 +2,12 @@ import Rank from '../../models/rank.model'
 import categoryList from '../../util/categoryList.util'
 
 export const runRankSeeds = async () => {
+  console.log("Seeding ranks...")
+
   return await Rank.bulkCreate([
     {
       name: "Novice",
-      description: "",
+      description: "Produce 5 scoresheets each of a different subcategory with at least a 21 score or higher. Of the 5 scoresheets, they shall include a minimum of 4 different BJCP categories",
       priority: 10,
       minScore: 21,
       minSubcats: 5,
@@ -19,7 +21,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Apprentice",
-      description: "",
+      description: "Produce 10 scoresheets each of a different subcategory with at least 21 score or higher. Of the 10 scoresheets, they shall include a minimum of 7 different BJCP categories. At least 1 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 20,
       minScore: 21,
       minSubcats: 10,
@@ -33,7 +35,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Proficient",
-      description: "",
+      description: "Produce 10 scoresheets each of a different subcategory with at least 30 score or higher. Of the 10 scoresheets, they shall include a minimum of 7 different BJCP categories. At least 2 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 30,
       minScore: 30,
       minSubcats: 10,
@@ -47,7 +49,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Recognized",
-      description: "",
+      description: "Produce 15 scoresheets each of a different subcategory with at least 30 score or higher. Of the 15 scoresheets, they shall include a minimum of 10 different BJCP categories. At least 3 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 40,
       minScore: 30,
       minSubcats: 15,
@@ -61,7 +63,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Distinguished",
-      description: "",
+      description: "Produce 15 scoresheets each of a different subcategory with at least 38 score or higher. Of the 15 scoresheets, they shall include a minimum of 11 different BJCP categories. At least 2 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 50,
       minScore: 38,
       minSubcats: 15,
@@ -75,7 +77,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Master",
-      description: "",
+      description: "Produce 20 scoresheets each of a different subcategory with at least 38 score or higher. Of the 20 scoresheets, they shall include a minimum of 15 different BJCP categories. At least 4 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 60,
       minScore: 38,
       minSubcats: 20,
@@ -89,7 +91,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master I",
-      description: "",
+      description: "Produce 10 scoresheets each of a different subcategory with at least 43 score or higher. Of the 10 scoresheets, they shall include a minimum of 5 different BJCP categories. At least 2 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 70,
       minScore: 43,
       minSubcats: 10,
@@ -103,7 +105,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master II",
-      description: "",
+      description: "Produce 15 scoresheets each of a different subcategory with at least 43 score or higher. Of the 15 scoresheets, they shall include a minimum of 7 different BJCP categories. At least 4 of the scoresheets shall be a Lager, Mead or Cider",
       priority: 80,
       minScore: 43,
       minSubcats: 15,
@@ -117,7 +119,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master III",
-      description: "",
+      description: "Produce 20 scoresheets each of a different subcategory with at least 43 score or higher. Of the 20 scoresheets, they shall include a minimum of 9 different BJCP categories. At least 5 of the scoresheets shall be a Lager, Mead or Cider",
       priority: 90,
       minScore: 43,
       minSubcats: 20,
@@ -131,7 +133,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master IV",
-      description: "",
+      description: "Produce 25 scoresheets each of a different subcategory with at least 43 score or higher. Of the 25 scoresheets, they shall include a minimum of 11 different BJCP categories. At least 6 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 100,
       minScore: 43,
       minSubcats: 25,
@@ -145,7 +147,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master V",
-      description: "",
+      description: "Produce 30 scoresheets each of a different subcategory with at least 43 score or higher. Of the 30 scoresheets, they shall include a minimum of 13 different BJCP categories. At least 7 of the scoresheets shall be a Sour, Lager, Mead or Cider",
       priority: 110,
       minScore: 43,
       minSubcats: 30,
@@ -159,7 +161,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master VI",
-      description: "",
+      description: "Produce 35 scoresheets each of a different subcategory with at least 43 score or higher. Of the 35 scoresheets, they shall include a minimum of 15 different BJCP categories. At least 8 of the scoresheets shall be a Sour, Lager, Mead or Cider: including a minimum of 5 lagers, 1 cider, 1 mead, and 1 sour.",
       priority: 120,
       minScore: 43,
       minSubcats: 35,
@@ -173,7 +175,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master VII",
-      description: "",
+      description: "Produce 40 scoresheets each of a different subcategory with at least 43 score or higher. Of the 40 scoresheets, they shall include a minimum of 17 different BJCP categories. At least 9 of the scoresheets shall be a Sour, Lager, Mead or Cider: including a minimum of 5 lagers, 1 cider, 2 mead, and 1 sour.",
       priority: 130,
       minScore: 43,
       minSubcats: 40,
@@ -187,7 +189,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master VIII",
-      description: "",
+      description: "Produce 45 scoresheets each of a different subcategory with at least 43 score or higher. Of the 45 scoresheets, they shall include a minimum of 19 different BJCP categories. At least 12 of the scoresheets shall be a Sour, Lager, Mead or Cider: including a minimum of 5 lagers, 2 ciders, 2 meads, and 2 sours. At least one of the sours shall be mixed fermentation.",
       priority: 140,
       minScore: 43,
       minSubcats: 45,
@@ -201,7 +203,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master IX",
-      description: "",
+      description: "Produce 50 scoresheets each of a different subcategory with at least 43 score or higher. Of the 50 scoresheets, they shall include a minimum of 21 different BJCP categories. At least 14 of the scoresheets shall be a Sour, Lager, Mead or Cider: including a minimum of 6 lagers, 3 ciders, 3 meads, and 2 sours. At least one of the sours shall be mixed fermentation.",
       priority: 150,
       minScore: 43,
       minSubcats: 50,
@@ -215,7 +217,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Grand Master X",
-      description: "",
+      description: "Produce 55 scoresheets each of a different subcategory with at least 43 score or higher. Of the 55 scoresheets, they shall include a minimum of 23 different BJCP categories. At least 16 of the scoresheets shall be a Sour, Lager, Mead or Cider: including a minimum of 7 lagers, 3 ciders, 3 meads, and 3 sours. At least one of the sours shall be mixed fermentation.",
       priority: 160,
       minScore: 43,
       minSubcats: 55,
@@ -229,7 +231,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Legendary Master",
-      description: "",
+      description: "Produce 1 scoresheet of at least 43 score or higher for every category of beer, mead, and Cider",
       priority: 170,
       minScore: 43,
       minSubcats: 0,
@@ -246,7 +248,7 @@ export const runRankSeeds = async () => {
     },
     {
       name: "Supreme Master of Brewing",
-      description: "",
+      description: "Produce 1 scoresheets of at least 43 score or higher for every sub-category of beer, mead, and Cider",
       priority: 180,
       minScore: 43,
       minSubcats: categoryList.length,

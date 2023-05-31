@@ -2,6 +2,8 @@ import Award from '../../models/award.model'
 import categoryList from '../../util/categoryList.util'
 
 export const runAwardSeeds = async () => {
+  console.log("Seeding awards...")
+
   return await Award.bulkCreate([
     {
       name: "Braumeister",
@@ -269,10 +271,8 @@ export const runAwardSeeds = async () => {
         acc[val.cat] = true
         return acc
       }, {})).length,
-      categoryList: Object.keys(categoryList.reduce((acc,val) => {
-        acc[val.cat] = true
-        return acc
-      }, {}))
+      categoryList: categoryList.map(category => category.cat + category.subcat),
+      preventCategoryDuplicates: true
     },
     {
       name: "Exalted Master of Beer",
