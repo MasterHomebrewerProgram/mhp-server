@@ -1,5 +1,5 @@
 import sequelizeConnection from './config'
-import {runAwardSeeds, runRankSeeds, runStarSeeds, runStyleSeeds} from "./seed"
+import {runAwardSeeds, runClubSeeds, runRankSeeds, runStarSeeds, runStyleSeeds, runUserSeeds} from "./seed"
 const isDev = process.env.NODE_ENV === 'development'
 
 import User from './models/user.model';
@@ -23,6 +23,7 @@ const dbInit = async () => {
   User.hasMany(Scoresheet)
   Scoresheet.belongsTo(User)
   User.hasMany(Rating)
+  Rating.belongsTo(User)
   Rank.belongsToMany(User, {through: Rank_User})
   Rank_User.belongsTo(User, {
     foreignKey: {
@@ -45,7 +46,9 @@ const dbInit = async () => {
   Scoresheet.belongsTo(Comp)
   Circuit.belongsToMany(Comp, {through: Comp_Circuit})
   Style.hasMany(Scoresheet)
+  Scoresheet.belongsTo(Style)
   Comp.hasMany(Rating)
+  Rating.belongsTo(Comp)
 
   console.log("\nSetting up schema...\n")
 
@@ -59,6 +62,11 @@ const dbInit = async () => {
   await runRankSeeds()
   await runStarSeeds()
   await runStyleSeeds()
+
+  if (process.env.NODE_ENV === 'development') {
+    const clubs = await runClubSeeds()
+    await runUserSeeds(clubs)
+  }
 
   console.log("\nDone seeding!\n")
 }

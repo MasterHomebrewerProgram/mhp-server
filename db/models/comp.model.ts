@@ -3,7 +3,7 @@ import sequelizeConnection from '../config'
 import Club from './club.model';
 import Scoresheet from './scoresheet.model';
 
-interface CompAttributes {
+export interface CompAttributes {
   id: string;
   name: string;
   url?: string;

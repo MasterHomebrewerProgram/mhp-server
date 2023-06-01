@@ -2,7 +2,7 @@ import Rank from '../../models/rank.model'
 import categoryList from '../../util/categoryList.util'
 
 export const runRankSeeds = async () => {
-  console.log("Seeding ranks...")
+  console.log("Seeding Rank table...")
 
   return await Rank.bulkCreate([
     {

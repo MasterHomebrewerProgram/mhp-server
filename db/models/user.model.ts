@@ -9,7 +9,7 @@ import sequelizeConnection from '../config'
 // import Comp from "./comp.model";
 // import Circuit, {Comp_Circuit} from "./circuit.model";
 
-interface UserAttributes {
+export interface UserAttributes {
   id: string;
   email: string;
   slug: string

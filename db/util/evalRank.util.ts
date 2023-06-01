@@ -1,9 +1,9 @@
-import { RankOutput, RankProgress } from '../models/rank.model'
+import Rank, { RankProgress } from '../models/rank.model'
 import Scoresheet from '../models/scoresheet.model'
 import Style from '../models/style.model'
 import categoryList, {mixedFermentationSours} from './categoryList.util'
 
-export default (scoresheets: Array<Scoresheet & {Style: Style}>, rank: RankOutput): RankProgress => {
+export default (scoresheets: Array<Scoresheet & {Style: Style}>, rank: Rank): RankProgress => {
   const total_approved = {}
   const total_unapproved = {}
   const categories_approved = {}

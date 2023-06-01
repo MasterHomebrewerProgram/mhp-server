@@ -2,7 +2,7 @@ import Award from '../../models/award.model'
 import categoryList from '../../util/categoryList.util'
 
 export const runAwardSeeds = async () => {
-  console.log("Seeding awards...")
+  console.log("Seeding Award table...")
 
   return await Award.bulkCreate([
     {

@@ -121,6 +121,7 @@ Rank.init({
 // Join table for rank <-> user
 interface Rank_User_Attributes {
   id: string;
+  achieved: boolean;
   approved: boolean;
   shouldShip: boolean;
   shipped?: boolean;
@@ -130,6 +131,7 @@ interface Rank_User_Attributes {
 
 export class Rank_User extends Model<Rank_User_Attributes> implements Rank_User_Attributes {
   public id!: string
+  public achieved: boolean
   public approved!: boolean;
   public shouldShip!: boolean;
   public shipped: boolean;
@@ -147,6 +149,10 @@ Rank_User.init({
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
+  },
+  achieved: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
   approved: {
     type: DataTypes.BOOLEAN

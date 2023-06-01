@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/MasterHomebrewerProgram/mhp-server#readme",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/express": "^4.17.17",
     "@types/passport": "^1.0.12",
     "@types/passport-local": "^1.0.35",

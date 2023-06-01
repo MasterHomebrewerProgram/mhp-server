@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
 
-interface ClubAttributes {
+export interface ClubAttributes {
   id: string;
   name: string;
   slug: string;
@@ -13,9 +13,9 @@ interface ClubAttributes {
   country?: string;
 
   paid: boolean;
-  paymentId: string;
-  paymentDate: Date;
-  paymentExpiry: Date;
+  paymentId?: string;
+  paymentDate?: Date;
+  paymentExpiry?: Date;
 }
 
 export interface ClubInput extends Optional<

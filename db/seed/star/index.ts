@@ -1,7 +1,7 @@
 import Star from '../../models/star.model'
 
 export const runStarSeeds = async () => {
-  console.log("Seeding stars...")
+  console.log("Seeding Star table...")
 
   const stars = ['gold', 'silver', 'bronze']
   
