@@ -11,6 +11,11 @@ interface ClubAttributes {
   city?: string;
   province?: string;
   country?: string;
+
+  paid: boolean;
+  paymentId: string;
+  paymentDate: Date;
+  paymentExpiry: Date;
 }
 
 export interface ClubInput extends Optional<
@@ -21,7 +26,11 @@ ClubAttributes,
  'bio' |
  'city' |
  'province' |
- 'country'
+ 'country' |
+ 'paid' |
+ 'paymentId' |
+ 'paymentDate' |
+ 'paymentExpiry'
 > {}
 export interface ClubOutput extends Required<ClubAttributes> {}
 
@@ -35,6 +44,11 @@ class Club extends Model<ClubAttributes, ClubInput> implements ClubAttributes {
   public city: string;
   public province: string;
   public country: string;
+
+  public paid: boolean;
+  public paymentId: string;
+  public paymentDate: Date;
+  public paymentExpiry: Date;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -75,7 +89,21 @@ Club.init({
   },
   country: {
     type: DataTypes.TEXT
-  }
+  },
+
+  paid: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  paymentId: {
+    type: DataTypes.STRING
+  },
+  paymentDate: {
+    type: DataTypes.DATE
+  },
+  paymentExpiry: {
+    type: DataTypes.DATE
+  },
 }, {
   timestamps: true,
   sequelize: sequelizeConnection,

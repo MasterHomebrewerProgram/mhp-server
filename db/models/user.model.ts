@@ -31,6 +31,11 @@ interface UserAttributes {
   emailVerificationCode?: string;
   passwordResetCode?: string;
 
+  paid: boolean;
+  paymentId: string;
+  paymentDate: Date;
+  paymentExpiry: Date;
+
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -43,7 +48,11 @@ export interface UserInput extends Optional<
  'emailVerified' |
  'emailVerificationCode' |
  'passwordResetCode' |
- 'password'
+ 'password' |
+ 'paid' |
+ 'paymentId' |
+ 'paymentDate' |
+ 'paymentExpiry'
 > {}
 export interface UserOutput extends Required<UserAttributes> {}
 export type SanitizedUserOutput = Omit<
@@ -52,6 +61,7 @@ export type SanitizedUserOutput = Omit<
   "adminLevel" |
   "emailVerificationCode" |
   "passwordResetCode" |
+  'paymentId' |
   "createdAt" |
   "updatedAt" |
   "deletedAt"
@@ -78,6 +88,11 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public emailVerified: boolean;
   public emailVerificationCode: string;
   public passwordResetCode: string;
+
+  public paid: boolean;
+  public paymentId: string;
+  public paymentDate: Date;
+  public paymentExpiry: Date;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -139,6 +154,20 @@ User.init({
   },
   country: {
     type: DataTypes.STRING
+  },
+
+  paid: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  paymentId: {
+    type: DataTypes.STRING
+  },
+  paymentDate: {
+    type: DataTypes.DATE
+  },
+  paymentExpiry: {
+    type: DataTypes.DATE
   },
 
   password: {
