@@ -1,5 +1,5 @@
 import sequelizeConnection from './config'
-import {runAwardSeeds, runClubSeeds, runRankSeeds, runStarSeeds, runStyleSeeds, runUserSeeds} from "./seed"
+import {runAwardSeeds, runCircuitSeeds, runClubSeeds, runRankSeeds, runRatingSeeds, runStarSeeds, runStyleSeeds, runUserSeeds} from "./seed"
 const isDev = process.env.NODE_ENV === 'development'
 
 import User from './models/user.model';
@@ -20,6 +20,7 @@ const dbInit = async () => {
   User.belongsToMany(Club, {through: Club_User})
   User.belongsToMany(Rank, {through: Rank_User})
   User.belongsToMany(Award, {through: Award_User})
+  User.belongsToMany(Star, {through: Star_User})
   User.hasMany(Scoresheet)
   Scoresheet.belongsTo(User)
   User.hasMany(Rating)
@@ -45,6 +46,7 @@ const dbInit = async () => {
   Comp.belongsTo(Club)
   Scoresheet.belongsTo(Comp)
   Circuit.belongsToMany(Comp, {through: Comp_Circuit})
+  Comp.belongsToMany(Circuit, {through: Comp_Circuit})
   Style.hasMany(Scoresheet)
   Scoresheet.belongsTo(Style)
   Comp.hasMany(Rating)
@@ -65,7 +67,9 @@ const dbInit = async () => {
 
   if (process.env.NODE_ENV === 'development') {
     const clubs = await runClubSeeds()
-    await runUserSeeds(clubs)
+    await runCircuitSeeds()
+    const users = await runUserSeeds(clubs)
+    await runRatingSeeds(users)
   }
 
   console.log("\nDone seeding!\n")

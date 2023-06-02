@@ -9,8 +9,8 @@ interface AwardAttributes {
   description: string
   photourl?: string
   categoryList: string[]
-  minScore?: number
-  minRequired?: number
+  minScore: number
+  minRequired: number
   preventCategoryDuplicates?: boolean
 }
 
@@ -37,8 +37,8 @@ class Award extends Model<AwardAttributes, AwardInput> implements AwardAttribute
   public description!: string
   public photourl: string
   public categoryList: string[]
-  public minScore?: number
-  public minRequired?: number
+  public minScore: number
+  public minRequired: number
   public preventCategoryDuplicates?: boolean
 
   public readonly createdAt!: Date;
@@ -87,6 +87,7 @@ Award.init({
 // Join table for Award <-> user
 interface Award_User_Attributes {
   id: string;
+  achieved: boolean;
   approved: boolean;
   shouldShip: boolean;
   shipped?: boolean;
@@ -96,6 +97,7 @@ interface Award_User_Attributes {
 
 export class Award_User extends Model<Award_User_Attributes> implements Award_User_Attributes {
   public id!: string
+  public achieved!: boolean;
   public approved!: boolean;
   public shouldShip!: boolean;
   public shipped: boolean;
@@ -113,6 +115,10 @@ Award_User.init({
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
+  },
+  achieved: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
   approved: {
     type: DataTypes.BOOLEAN

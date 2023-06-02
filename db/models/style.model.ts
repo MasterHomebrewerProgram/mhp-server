@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
 import Scoresheet from './scoresheet.model'
 
-interface StyleAttributes {
+export interface StyleAttributes {
   id: string
   cat: string
   subcat: string

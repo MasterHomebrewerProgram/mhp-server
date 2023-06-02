@@ -47,6 +47,8 @@ interface RatingAttributes {
   score: number;
   text?: string;
   data?: RatingData
+  isPublic?: Boolean
+  isAnonymous?: Boolean
 }
 
 export interface RatingInput extends Optional<
@@ -62,7 +64,8 @@ class Rating extends Model<RatingAttributes, RatingInput> implements RatingAttri
   public score!: number;
   public text: string;
   public data: RatingData
-
+  public isPublic: Boolean
+  public isAnonymous: Boolean
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -85,6 +88,14 @@ Rating.init({
   },
   data: {
     type: DataTypes.JSON
+  },
+  isPublic: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
+  isAnonymous: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
   }
 }, {
   timestamps: true,
