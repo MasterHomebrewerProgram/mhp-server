@@ -84,7 +84,7 @@ export default (scoresheets: Array<Scoresheet & {Style: Style}>, rank: Rank): Ra
   })
 
   const sheetsApproved = Object.keys(total_approved).length >= rank.minSubcats && 
-    Object.keys(categories_approved).length >= rank.minSubcats &&
+    Object.keys(categories_approved).length >= rank.minCats &&
     slmc_approved >= rank.minSlmc &&
     lager_approved >= rank.minLagers &&
     sour_approved >= rank.minSours &&
@@ -93,7 +93,7 @@ export default (scoresheets: Array<Scoresheet & {Style: Style}>, rank: Rank): Ra
     mixed_sour_approved >= rank.minMixedSours
 
   const achieved = Object.keys(total_unapproved).length >= rank.minSubcats && 
-    Object.keys(categories_unapproved).length >= rank.minSubcats &&
+    Object.keys(categories_unapproved).length >= rank.minCats &&
     slmc_unapproved >= rank.minSlmc
     lager_unapproved >= rank.minLagers &&
     sour_unapproved >= rank.minSours &&
@@ -101,7 +101,7 @@ export default (scoresheets: Array<Scoresheet & {Style: Style}>, rank: Rank): Ra
     cider_unapproved >= rank.minCiders &&
     mixed_sour_unapproved >= rank.minMixedSours
 
-  const requirements = achieved ? [
+  const requirements = !achieved ? [
     {
       description: `${rank.minSubcats} styles ${rank.minScore}+`,
       categories: categoryList

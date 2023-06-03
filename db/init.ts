@@ -65,7 +65,7 @@ const dbInit = async () => {
   await runStarSeeds()
   await runStyleSeeds()
 
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev) {
     const clubs = await runClubSeeds()
     await runCircuitSeeds()
     const users = await runUserSeeds(clubs)
@@ -74,4 +74,5 @@ const dbInit = async () => {
 
   console.log("\nDone seeding!\n")
 }
+
 export default dbInit 

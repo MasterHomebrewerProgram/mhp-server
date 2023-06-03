@@ -23,14 +23,13 @@ export default (scoresheets: Array<Scoresheet & {Style: Style}>, award: Award): 
 
   const achieved = Object.keys(categoriesUnapproved).length >= award.minRequired
 
-  const requirements = achieved ? [
+  const requirements = !achieved ? [
     {
       description: `${award.minRequired} styles ${award.minScore}+ in list`,
-      categories: categoryList
-        .map(category => category.cat+category.subcat)
+      categories: award.categoryList
         .filter(categoryString => !Object.keys(categoriesUnapproved).includes(categoryString)),
       completed: Math.min(Object.keys(categoriesUnapproved).length, award.minRequired),
-      total: award.minRequired
+      total: Number(award.minRequired)
     }
   ] : []
 

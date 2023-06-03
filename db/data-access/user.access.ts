@@ -1,4 +1,7 @@
 const crypto = require("crypto");
+import Award, { AwardOutput } from "../models/award.model";
+import Rank from "../models/rank.model";
+import Star from "../models/star.model";
 import User, { SanitizedUserOutput, UserInput } from "../models/user.model"
 
 export const loginUser = async (email: string, password: string): Promise<SanitizedUserOutput> => {
@@ -21,7 +24,21 @@ export const loginUser = async (email: string, password: string): Promise<Saniti
 
 export const getUser = async (userId: string): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
-    where: {id: userId}
+    where: {id: userId},
+    include: [
+      {
+        model: Award,
+        attributes: ['id', 'name', 'description', 'photourl']
+      },
+      {
+        model: Rank,
+        attributes: ['id', 'name', 'description', 'photourl']
+      },
+      {
+        model: Star,
+        attributes: ['id', 'name', 'description', 'photourl']
+      }
+    ]
   })
 
   if (!user) {

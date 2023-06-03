@@ -88,6 +88,8 @@ Award.init({
 interface Award_User_Attributes {
   id: string;
   achieved: boolean;
+  achievedAt: Date;
+  requirements?: AwardProgress["requirements"]
   approved: boolean;
   shouldShip: boolean;
   shipped?: boolean;
@@ -98,6 +100,8 @@ interface Award_User_Attributes {
 export class Award_User extends Model<Award_User_Attributes> implements Award_User_Attributes {
   public id!: string
   public achieved!: boolean;
+  public achievedAt: Date;
+  requirements: AwardProgress["requirements"]
   public approved!: boolean;
   public shouldShip!: boolean;
   public shipped: boolean;
@@ -119,6 +123,12 @@ Award_User.init({
   achieved: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  achievedAt: {
+    type: DataTypes.DATE
+  },
+  requirements: {
+    type: DataTypes.JSON
   },
   approved: {
     type: DataTypes.BOOLEAN

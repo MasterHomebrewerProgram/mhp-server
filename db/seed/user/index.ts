@@ -58,7 +58,7 @@ const createRandomUser = (): UserAttributes => {
 
   return {
     id: faker.string.uuid(),
-    email: faker.internet.email(),
+    email: faker.internet.email().toLocaleLowerCase(),
     slug: faker.string.uuid(),
     fname: faker.person.firstName(),
     lname: faker.person.lastName(),
@@ -198,6 +198,11 @@ export const runUserSeeds = async (clubs?: Club[]) => {
           catStrings.push(...mixedSourCats.slice(currentRank.minMixedSours))
         }
 
+        if (currentRank.minSlmc) {
+          const slmcCats = shuffle(categoryList.filter(cat => (cat.isSour || cat.isCider || cat.isLager || cat.isMead)))
+          catStrings.push(...slmcCats.slice(currentRank.minSlmc))
+        }
+
         const normalCats = shuffle(categoryList.filter(cat => (!cat.isSour && !cat.isCider && !cat.isLager && !cat.isMead)))
         catStrings.push(...normalCats.slice(catStrings.length, currentRank.minSubcats + 1))
 
@@ -295,7 +300,9 @@ export const runUserSeeds = async (clubs?: Club[]) => {
           const rankProgress = evalRank(scoresheets, rank)
 
           await userRank.update({
-            achieved: rankProgress.achieved
+            achieved: rankProgress.achieved,
+            achievedAt: rankProgress.achieved ? new Date() : undefined,
+            requirements: rankProgress.requirements
           })
         })
       )
@@ -331,7 +338,9 @@ export const runUserSeeds = async (clubs?: Club[]) => {
           const awardProgress = evalAward(scoresheets, award)
 
           await userAward.update({
-            achieved: awardProgress.achieved
+            achieved: awardProgress.achieved,
+            achievedAt: awardProgress.achieved ? new Date() : undefined,
+            requirements: awardProgress.requirements
           })
         })
       )

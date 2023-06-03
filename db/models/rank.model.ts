@@ -122,6 +122,8 @@ Rank.init({
 interface Rank_User_Attributes {
   id: string;
   achieved: boolean;
+  achievedAt: Date;
+  requirements?: RankProgress["requirements"]
   approved: boolean;
   shouldShip: boolean;
   shipped?: boolean;
@@ -132,6 +134,8 @@ interface Rank_User_Attributes {
 export class Rank_User extends Model<Rank_User_Attributes> implements Rank_User_Attributes {
   public id!: string
   public achieved: boolean
+  public achievedAt: Date;
+  public requirements: RankProgress["requirements"]
   public approved!: boolean;
   public shouldShip!: boolean;
   public shipped: boolean;
@@ -153,6 +157,12 @@ Rank_User.init({
   achieved: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  achievedAt: {
+    type: DataTypes.DATE
+  },
+  requirements: {
+    type: DataTypes.JSON
   },
   approved: {
     type: DataTypes.BOOLEAN
