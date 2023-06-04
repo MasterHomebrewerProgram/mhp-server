@@ -1,8 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
-import Comp from './comp.model';
 
-interface CircuitAttributes {
+export interface CircuitAttributes {
   id: string;
   year: number;
 }

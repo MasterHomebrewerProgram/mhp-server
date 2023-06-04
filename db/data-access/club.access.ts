@@ -1,8 +1,9 @@
 import { Op } from 'sequelize'
-import Club, {ClubInput} from '../models/club.model'
-import User from '../models/user.model'
+import Club, {ClubAttributes, ClubInput} from '../models/club.model'
+import User, { UserAttributes } from '../models/user.model'
+import { Club_User } from '../models'
 
-export const getClub = async (clubId: string): Promise<Club> => {
+export const getClub = async (clubId: string): Promise<ClubAttributes> => {
   const club = await Club.findOne({
     where: {id: clubId}
   })
@@ -11,10 +12,10 @@ export const getClub = async (clubId: string): Promise<Club> => {
     return Promise.reject({message: "Could not find club"})
   }
 
-  return club
+  return club.get({plain: true})
 }
 
-export const createClub = async (clubData: ClubInput): Promise<Club> => {
+export const createClub = async (clubData: ClubInput): Promise<ClubAttributes> => {
   const clubName = clubData.name?.toLocaleLowerCase()
   const clubSlug = clubData.slug
 
@@ -44,10 +45,10 @@ export const createClub = async (clubData: ClubInput): Promise<Club> => {
     name: clubName
   })
 
-  return newClub
+  return newClub.get({plain: true})
 }
 
-export const updateClub = async (clubData: Partial<ClubInput>): Promise<Club> => {
+export const updateClub = async (clubData: Partial<ClubInput>): Promise<ClubAttributes> => {
   const clubName = clubData.name?.toLocaleLowerCase()
 
   const existingClub = await Club.findOne({ 
@@ -68,7 +69,7 @@ export const updateClub = async (clubData: Partial<ClubInput>): Promise<Club> =>
 
   const club = await existingClub.update(clubData)
 
-  return club
+  return club.get({plain: true})
 }
 
 export const deleteClub = async (clubId: string): Promise<boolean> => {
@@ -79,8 +80,8 @@ export const deleteClub = async (clubId: string): Promise<boolean> => {
   return deleted > 0
 }
 
-export const addUserToClub = async (userId: string, clubId: string): Promise<User> => {
-  const user = await User.findOne({
+export const addUserToClub = async (userId: string, clubId: string): Promise<UserAttributes> => {
+  const user = await User.count({
     where: {id: userId}
   })
 
@@ -88,7 +89,7 @@ export const addUserToClub = async (userId: string, clubId: string): Promise<Use
     return Promise.reject({message: "Could not find user"})
   }
 
-  const club = await Club.findOne({
+  const club = await Club.count({
     where: {id: clubId}
   })
 
@@ -96,8 +97,30 @@ export const addUserToClub = async (userId: string, clubId: string): Promise<Use
     return Promise.reject({message: "Could not find club"})
   }
 
-  // @ts-expect-error: model associations not set
-  const updatedUser = await user.setClub(club)
+  await Club_User.create({
+    // @ts-expect-error ClubId not exposed
+    "ClubId": clubId,
+    "UserId": userId
+  })
 
-  return updatedUser
+  const updatedUser = await User.findOne({
+    where: {id: userId},
+    include: {
+      model: Club
+    }
+  })
+
+  return updatedUser.get({plain: true})
+}
+
+export const removeUserFromClub = async (userId: string, clubId: string): Promise<boolean> => {
+  const numRemoved = await Club_User.destroy({
+    where: {
+      // @ts-expect-error ClubId not exposed
+      "ClubId": clubId,
+      "UserId": userId
+    }
+  })
+
+  return numRemoved > 0
 }

@@ -51,7 +51,7 @@ export const getUser = async (userId: string): Promise<SanitizedUserOutput> => {
 export const registerUser = async (userData: UserInput & {password : string}): Promise<SanitizedUserOutput> => {
   userData.email = userData.email.toLocaleLowerCase()
 
-  const existingUser = await User.findOne({ where: { email: userData.email } })
+  const existingUser = await User.count({ where: { email: userData.email } })
 
   // Check if user email already exists
   if (!!existingUser) {

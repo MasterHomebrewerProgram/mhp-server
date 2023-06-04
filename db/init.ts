@@ -21,7 +21,7 @@ const dbInit = async () => {
   User.belongsToMany(Rank, {through: Rank_User})
   User.belongsToMany(Award, {through: Award_User})
   User.belongsToMany(Star, {through: Star_User})
-  User.hasMany(Scoresheet)
+  User.hasMany(Scoresheet, { onDelete: 'cascade' })
   Scoresheet.belongsTo(User)
   User.hasMany(Rating)
   Rating.belongsTo(User)
