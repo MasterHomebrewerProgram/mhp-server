@@ -28,15 +28,15 @@ export const getUser = async (userId: string): Promise<SanitizedUserOutput> => {
     include: [
       {
         model: Award,
-        attributes: ['id', 'name', 'description', 'photourl']
+        attributes: ['id', 'name', 'description', 'photourl', 'stl']
       },
       {
         model: Rank,
-        attributes: ['id', 'name', 'description', 'photourl']
+        attributes: ['id', 'name', 'description', 'photourl', 'stl']
       },
       {
         model: Star,
-        attributes: ['id', 'name', 'description', 'photourl']
+        attributes: ['id', 'name', 'description', 'photourl', 'stl']
       }
     ]
   })
