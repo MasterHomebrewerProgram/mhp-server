@@ -6,6 +6,7 @@ interface RankAttributes {
   name: string
   description: string
   photourl?: string
+  stl?: string
   priority: number
   minScore?: number
   minSubcats?: number
@@ -40,6 +41,7 @@ class Rank extends Model<RankAttributes, RankInput> implements RankAttributes {
   public name!: string
   public description!: string
   public photourl: string
+  public stl: string
   public priority: number
   public minScore: number
   public minSubcats: number
@@ -71,6 +73,9 @@ Rank.init({
     type: DataTypes.TEXT
   },
   photourl: {
+    type: DataTypes.STRING
+  },
+  stl: {
     type: DataTypes.STRING
   },
   priority: {

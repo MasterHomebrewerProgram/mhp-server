@@ -6,6 +6,7 @@ interface StarAttributes {
   name: string
   description: string
   photourl?: string
+  stl?: string
 }
 
 export interface StarInput extends Optional<
@@ -19,6 +20,7 @@ class Star extends Model<StarAttributes, StarInput> implements StarAttributes {
   public name!: string
   public description!: string
   public photourl: string
+  public stl: string
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -40,6 +42,9 @@ Star.init({
     type: DataTypes.TEXT
   },
   photourl: {
+    type: DataTypes.STRING
+  },
+  stl: {
     type: DataTypes.STRING
   }
 }, {

@@ -8,6 +8,7 @@ interface AwardAttributes {
   name: string
   description: string
   photourl?: string
+  stl?: string
   categoryList: string[]
   minScore: number
   minRequired: number
@@ -36,6 +37,7 @@ class Award extends Model<AwardAttributes, AwardInput> implements AwardAttribute
   public name!: string
   public description!: string
   public photourl: string
+  public stl: string
   public categoryList: string[]
   public minScore: number
   public minRequired: number
@@ -63,6 +65,9 @@ Award.init({
     type: DataTypes.TEXT
   },
   photourl: {
+    type: DataTypes.STRING
+  },
+  stl: {
     type: DataTypes.STRING
   },
   categoryList: {
