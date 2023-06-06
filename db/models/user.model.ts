@@ -24,6 +24,7 @@ export interface UserAttributes {
   province?: string;
   postalCode?: string;
   country?: string;
+  settings?: {[id: string]: string}
 
   password: string;
   adminLevel: number;
@@ -82,6 +83,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public province: string;
   public postalCode: string;
   public country: string;
+  public settings: {[id: string]: string}
 
   public password!: string;
   public adminLevel!: number;
@@ -154,6 +156,9 @@ User.init({
   },
   country: {
     type: DataTypes.STRING
+  },
+  settings: {
+    type: DataTypes.JSON
   },
 
   paid: {
