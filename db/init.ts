@@ -23,22 +23,31 @@ const dbInit = async () => {
   User.belongsToMany(Star, {through: Star_User})
   User.hasMany(Scoresheet, { onDelete: 'cascade' })
   Scoresheet.belongsTo(User)
+  Rank_User.belongsTo(User, {
+    as: "approvedby",
+    foreignKey: {
+      name: "approvedby"
+    }
+  })
   User.hasMany(Rating)
   Rating.belongsTo(User)
   Rank.belongsToMany(User, {through: Rank_User})
   Rank_User.belongsTo(User, {
+    as: "approvedby",
     foreignKey: {
       name: "approvedby"
     }
   })
   Award.belongsToMany(User, {through: Award_User})
   Award_User.belongsTo(User, {
+    as: "approvedby",
     foreignKey: {
       name: "approvedby"
     }
   })
   Star.belongsToMany(User, {through: Star_User})
   Award_User.belongsTo(User, {
+    as: "approvedby",
     foreignKey: {
       name: "approvedby"
     }

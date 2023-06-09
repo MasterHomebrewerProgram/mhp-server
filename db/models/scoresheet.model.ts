@@ -1,9 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
-import User from './user.model'
-import Style from './style.model'
 
-interface ScoresheetAttributes {
+export interface ScoresheetAttributes {
   id: string
   score: number
   approved: boolean
