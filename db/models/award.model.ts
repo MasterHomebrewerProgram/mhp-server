@@ -3,7 +3,7 @@ import sequelizeConnection from '../config'
 import Scoresheet from './scoresheet.model'
 import Style from './style.model'
 
-interface AwardAttributes {
+export interface AwardAttributes {
   id: string
   name: string
   description: string
@@ -90,7 +90,7 @@ Award.init({
 })
 
 // Join table for Award <-> user
-interface Award_User_Attributes {
+export interface Award_User_Attributes {
   id: string;
   achieved: boolean;
   achievedAt: Date;
@@ -106,7 +106,7 @@ export class Award_User extends Model<Award_User_Attributes> implements Award_Us
   public id!: string
   public achieved!: boolean;
   public achievedAt: Date;
-  requirements: AwardProgress["requirements"]
+  public requirements: AwardProgress["requirements"]
   public approved!: boolean;
   public shouldShip!: boolean;
   public shipped: boolean;

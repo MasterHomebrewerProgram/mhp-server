@@ -80,7 +80,7 @@ export const deleteClub = async (clubId: string): Promise<boolean> => {
   return deleted > 0
 }
 
-export const addUserToClub = async (userId: string, clubId: string): Promise<UserAttributes> => {
+export const addUserToClub = async (userId: string, clubId: string): Promise<UserAttributes & {Club?: ClubAttributes}> => {
   const user = await User.count({
     where: {id: userId}
   })
