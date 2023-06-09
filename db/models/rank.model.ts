@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 import sequelizeConnection from '../config'
 
-interface RankAttributes {
+export interface RankAttributes {
   id: string
   name: string
   description: string
@@ -124,7 +124,7 @@ Rank.init({
 })
 
 // Join table for rank <-> user
-interface Rank_User_Attributes {
+export interface Rank_User_Attributes {
   id: string;
   achieved: boolean;
   achievedAt: Date;
