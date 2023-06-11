@@ -117,12 +117,47 @@ export const approveAwardForUser = async (awardId: string, userId: string, appro
 }
 
 
-export const getShippableAwards = async (): Promise<(Award_User_Attributes & {User?: Partial<UserAttributes>, Award?: AwardAttributes})[]> => {
+export const getAwardsByApprovalState = async (approved=true): Promise<(Award_User_Attributes & {User?: Partial<UserAttributes>, Award?: AwardAttributes})[]> => {
+  const approvedAwards = await Award_User.findAll({
+    where: {
+      approved,
+    },
+    include: [
+      {
+        model: User,
+        include: [
+          'id',
+          'email',
+          'slug',
+          'fname',
+          'lname',
+          'photourl',
+          'address1',
+          'address2',
+          'address3',
+          'city',
+          'province',
+          'postalCode',
+          'country'
+        ]
+      },
+      {
+        model: Award
+      }
+    ],
+    raw: true,
+    nest: true
+  }) 
+
+  return approvedAwards
+}
+
+export const getAwardsByShipState = async (shouldShip=true, shipped=false): Promise<(Award_User_Attributes & {User?: Partial<UserAttributes>, Award?: AwardAttributes})[]> => {
   const shippable = await Award_User.findAll({
     where: {
       approved: true,
-      shipped: false,
-      shouldShip: true
+      shipped,
+      shouldShip
     },
     include: [
       {

@@ -117,12 +117,47 @@ export const approveRankForUser = async (rankId: string, userId: string, approve
 }
 
 
-export const getShippableRanks = async (): Promise<(Rank_User_Attributes & {User?: Partial<UserAttributes>, Rank?: RankAttributes})[]> => {
+export const getRanksByApprovalState = async (approved=true): Promise<(Rank_User_Attributes & {User?: Partial<UserAttributes>, Rank?: RankAttributes})[]> => {
+  const approvedRanks = await Rank_User.findAll({
+    where: {
+      approved,
+    },
+    include: [
+      {
+        model: User,
+        include: [
+          'id',
+          'email',
+          'slug',
+          'fname',
+          'lname',
+          'photourl',
+          'address1',
+          'address2',
+          'address3',
+          'city',
+          'province',
+          'postalCode',
+          'country'
+        ]
+      },
+      {
+        model: Rank
+      }
+    ],
+    raw: true,
+    nest: true
+  }) 
+
+  return approvedRanks
+}
+
+export const getRanksByShipState = async (shouldShip=true, shipped=false): Promise<(Rank_User_Attributes & {User?: Partial<UserAttributes>, Rank?: RankAttributes})[]> => {
   const shippable = await Rank_User.findAll({
     where: {
       approved: true,
-      shipped: false,
-      shouldShip: true
+      shipped,
+      shouldShip
     },
     include: [
       {

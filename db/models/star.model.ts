@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 import sequelizeConnection from '../config'
 
-interface StarAttributes {
+export interface StarAttributes {
   id: string
   name: string
   description: string
@@ -54,7 +54,7 @@ Star.init({
 })
 
 // Join table for Star <-> user
-interface Star_User_Attributes {
+export interface Star_User_Attributes {
   id: string;
   description: string;
   approved: boolean;
