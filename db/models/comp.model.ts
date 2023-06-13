@@ -1,7 +1,7 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
-import Club from './club.model';
-import Scoresheet from './scoresheet.model';
+import { DataTypes, Model, Optional } from "sequelize";
+import sequelizeConnection from "../config";
+import Club from "./club.model";
+import Scoresheet from "./scoresheet.model";
 
 export interface CompAttributes {
   id: string;
@@ -14,16 +14,11 @@ export interface CompAttributes {
   country?: string;
 }
 
-export interface CompInput extends Optional<
-CompAttributes,
- 'id' | 
- 'url' |
- 'photourl' |
- 'description' |
- 'city' |
- 'province' |
- 'country'
-> {}
+export interface CompInput
+  extends Optional<
+    CompAttributes,
+    "id" | "url" | "photourl" | "description" | "city" | "province" | "country"
+  > {}
 export interface CompOutput extends Required<CompAttributes> {}
 
 class Comp extends Model<CompAttributes, CompInput> implements CompAttributes {
@@ -41,40 +36,43 @@ class Comp extends Model<CompAttributes, CompInput> implements CompAttributes {
   public readonly deletedAt!: Date;
 }
 
-Comp.init({
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-    allowNull: false,
+Comp.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    url: {
+      type: DataTypes.TEXT,
+    },
+    description: {
+      type: DataTypes.TEXT,
+    },
+    photourl: {
+      type: DataTypes.TEXT,
+    },
+    city: {
+      type: DataTypes.TEXT,
+    },
+    province: {
+      type: DataTypes.TEXT,
+    },
+    country: {
+      type: DataTypes.TEXT,
+    },
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  url: {
-    type: DataTypes.TEXT
-  },
-  description: {
-    type: DataTypes.TEXT
-  },
-  photourl: {
-    type: DataTypes.TEXT
-  },
-  city: {
-    type: DataTypes.TEXT
-  },
-  province: {
-    type: DataTypes.TEXT
-  },
-  country: {
-    type: DataTypes.TEXT
+  {
+    timestamps: true,
+    sequelize: sequelizeConnection,
+    paranoid: true,
   }
-}, {
-  timestamps: true,
-  sequelize: sequelizeConnection,
-  paranoid: true
-})
+);
 
-export default Comp
+export default Comp;

@@ -1,34 +1,33 @@
 export const mixedFermentationSours = [
-  '23A',
-  '23B',
-  '23C',
-  '23D',
-  '23E',
-  '23F',
-  '28B',
-  '28C'
-]
+  "23A",
+  "23B",
+  "23C",
+  "23D",
+  "23E",
+  "23F",
+  "28B",
+  "28C",
+];
 
 export default [
-
   // BEERS
   {
     cat: "1",
     subcat: "A",
     name: "American Light Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "1",
     subcat: "B",
     name: "American Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "1",
     subcat: "C",
     name: "Cream Ale",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "1",
@@ -39,61 +38,61 @@ export default [
     cat: "2",
     subcat: "A",
     name: "International Pale Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "2",
     subcat: "B",
     name: "International Amber Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "2",
     subcat: "C",
     name: "International Dark Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "3",
     subcat: "A",
     name: "Czech Pale Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "3",
     subcat: "B",
     name: "Czech Premium Pale Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "3",
     subcat: "C",
     name: "Czech Amber Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "3",
     subcat: "D",
     name: "Czech Dark Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "4",
     subcat: "A",
     name: "Munich Helles",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "4",
     subcat: "B",
     name: "Festbier",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "4",
     subcat: "C",
     name: "Helles Bock",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "5",
@@ -109,73 +108,73 @@ export default [
     cat: "5",
     subcat: "C",
     name: "German Helles Exportbier",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "5",
     subcat: "D",
     name: "German Pils",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "6",
     subcat: "A",
     name: "Marzen",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "6",
     subcat: "B",
     name: "Rauchbier",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "6",
     subcat: "C",
     name: "Dunkles Bock",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "7",
     subcat: "A",
     name: "Vienna Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "7",
     subcat: "B",
     name: "Altbier",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "8",
     subcat: "A",
     name: "Munich Dunkel",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "8",
     subcat: "B",
     name: "Schwarzbier",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "9",
     subcat: "A",
     name: "Doppelbock",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "9",
     subcat: "B",
     name: "Eisbock",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "9",
     subcat: "C",
     name: "Baltic Porter",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "10",
@@ -416,43 +415,43 @@ export default [
     cat: "23",
     subcat: "A",
     name: "Berliner Weisse",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "23",
     subcat: "B",
     name: "Flanders Red Ale",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "23",
     subcat: "C",
     name: "Oud Bruin",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "23",
     subcat: "D",
     name: "Lambic",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "23",
     subcat: "E",
     name: "Gueuze",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "23",
     subcat: "F",
     name: "Fruit Lambic",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "23",
     subcat: "G",
     name: "Gose",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "24",
@@ -508,7 +507,7 @@ export default [
     cat: "27",
     subcat: "A",
     name: "Kellerbier",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "27",
@@ -519,7 +518,7 @@ export default [
     cat: "27",
     subcat: "C",
     name: "Lichtenhainer",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "27",
@@ -535,7 +534,7 @@ export default [
     cat: "27",
     subcat: "F",
     name: "Pre-Prohibition Lager",
-    isLager: true
+    isLager: true,
   },
   {
     cat: "27",
@@ -556,25 +555,25 @@ export default [
     cat: "28",
     subcat: "A",
     name: "Brett Beer",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "28",
     subcat: "B",
     name: "Mixed-Fermentation Sour Beer",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "28",
     subcat: "C",
     name: "Wild Specialty Beer",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "28",
     subcat: "D",
     name: "Straight Sour Beer",
-    isSour: true
+    isSour: true,
   },
   {
     cat: "29",
@@ -692,79 +691,79 @@ export default [
     cat: "M1",
     subcat: "A",
     name: "Dry Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M1",
     subcat: "B",
     name: "Semi-Sweet Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M1",
     subcat: "C",
     name: "Sweet Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M2",
     subcat: "A",
     name: "Cyser",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M2",
     subcat: "B",
     name: "Pyment",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M2",
     subcat: "C",
     name: "Berry Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M2",
     subcat: "D",
     name: "Stone Fruit Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M2",
     subcat: "E",
     name: "Melomel",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M3",
     subcat: "A",
     name: "Fruit and Spice Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M3",
     subcat: "B",
     name: "Spice, Herb or Vegetable Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M4",
     subcat: "A",
     name: "Braggot",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M4",
     subcat: "B",
     name: "Historical Mead",
-    isMead: true
+    isMead: true,
   },
   {
     cat: "M4",
     subcat: "C",
     name: "Experimental Mead",
-    isMead: true
+    isMead: true,
   },
 
   // CIDER
@@ -772,66 +771,66 @@ export default [
     cat: "C1",
     subcat: "A",
     name: "New World Cider",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C1",
     subcat: "B",
     name: "English Cider",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C1",
     subcat: "C",
     name: "French Cider",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C1",
     subcat: "D",
     name: "New World Perry",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C1",
     subcat: "E",
     name: "Traditional Perry",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C2",
     subcat: "A",
     name: "New England Cider",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C2",
     subcat: "B",
     name: "Cider with Other Fruit",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C2",
     subcat: "C",
     name: "Applewine",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C2",
     subcat: "D",
     name: "Ice Cider",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C2",
     subcat: "E",
     name: "Cider with Herbs/Spices",
-    isCider: true
+    isCider: true,
   },
   {
     cat: "C2",
     subcat: "F",
     name: "Specialty Cider/Perry",
-    isCider: true
-  }    
-]
+    isCider: true,
+  },
+];

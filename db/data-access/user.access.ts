@@ -2,66 +2,73 @@ const crypto = require("crypto");
 import Award, { AwardOutput } from "../models/award.model";
 import Rank from "../models/rank.model";
 import Star from "../models/star.model";
-import User, { SanitizedUserOutput, UserInput } from "../models/user.model"
+import User, { SanitizedUserOutput, UserInput } from "../models/user.model";
 
-export const loginUser = async (email: string, password: string): Promise<SanitizedUserOutput> => {
+export const loginUser = async (
+  email: string,
+  password: string
+): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
-    where: {email}
-  })
+    where: { email },
+  });
 
   if (!user) {
-    return Promise.reject({message: "Could not find user"})
+    return Promise.reject({ message: "Could not find user" });
   }
 
-  if (await user.hashPassword(password) !== user.password) {
+  if ((await user.hashPassword(password)) !== user.password) {
     return Promise.reject({
-      message: "Invalid password"
-    })
+      message: "Invalid password",
+    });
   }
 
-  return user.sanitize()
-}
+  return user.sanitize();
+};
 
 export const getUser = async (userId: string): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
-    where: {id: userId},
+    where: { id: userId },
     include: [
       {
         model: Award,
-        attributes: ['id', 'name', 'description', 'photourl', 'stl']
+        attributes: ["id", "name", "description", "photourl", "stl"],
       },
       {
         model: Rank,
-        attributes: ['id', 'name', 'description', 'photourl', 'stl']
+        attributes: ["id", "name", "description", "photourl", "stl"],
       },
       {
         model: Star,
-        attributes: ['id', 'name', 'description', 'photourl', 'stl']
-      }
-    ]
-  })
+        attributes: ["id", "name", "description", "photourl", "stl"],
+      },
+    ],
+  });
 
   if (!user) {
-    return Promise.reject({message: "Could not find user"})
+    return Promise.reject({ message: "Could not find user" });
   }
 
-  return user.sanitize()
-}
+  return user.sanitize();
+};
 
-export const registerUser = async (userData: UserInput & {password : string}): Promise<SanitizedUserOutput> => {
-  userData.email = userData.email.toLocaleLowerCase()
+export const registerUser = async (
+  userData: UserInput & { password: string }
+): Promise<SanitizedUserOutput> => {
+  userData.email = userData.email.toLocaleLowerCase();
 
-  const existingUser = await User.count({ where: { email: userData.email } })
+  const existingUser = await User.count({ where: { email: userData.email } });
 
   // Check if user email already exists
   if (!!existingUser) {
     return Promise.reject({
-      message: "Email address already registered"
+      message: "Email address already registered",
     });
   }
 
   // Test email for validity
-  const emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+  const emailRegex = new RegExp(
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  );
   if (!emailRegex.test(userData.email)) {
     return Promise.reject({
       message: "Invalid email format",
@@ -72,7 +79,7 @@ export const registerUser = async (userData: UserInput & {password : string}): P
   const passwordRegex = new RegExp(/.*/); // TODO(matt): currently matches anythigng, make this stronger
   if (!passwordRegex.test(userData.password)) {
     return Promise.reject({
-      message: "Password does not meet security criteria"
+      message: "Password does not meet security criteria",
     });
   }
 
@@ -94,82 +101,92 @@ export const registerUser = async (userData: UserInput & {password : string}): P
     password: userData.password,
     emailVerified: false,
     emailVerificationCode: emailVerificationCode,
-    adminLevel: 0
-  })
+    adminLevel: 0,
+  });
 
-  return newUser.sanitize()
-}
+  return newUser.sanitize();
+};
 
-export const updateUser = async (userData: UserInput & {password? : string}): Promise<SanitizedUserOutput> => {
-  userData.email = userData.email.toLocaleLowerCase()
+export const updateUser = async (
+  userData: UserInput & { password?: string }
+): Promise<SanitizedUserOutput> => {
+  userData.email = userData.email.toLocaleLowerCase();
 
-  const existingUser = await User.findOne({ where: { email: userData.email } })
+  const existingUser = await User.findOne({ where: { email: userData.email } });
 
   // Check if user email already exists
   if (!existingUser) {
     return Promise.reject({
-      message: "User not found"
+      message: "User not found",
     });
   }
 
-  const user = await existingUser.update(userData)
+  const user = await existingUser.update(userData);
 
-  return user.sanitize()
-}
+  return user.sanitize();
+};
 
-export const validateEmail = async (verificationCode: string): Promise<SanitizedUserOutput> => {
+export const validateEmail = async (
+  verificationCode: string
+): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
     where: {
-      emailVerificationCode: verificationCode
-    }
-  })
+      emailVerificationCode: verificationCode,
+    },
+  });
 
   if (!user) {
     return Promise.reject({
-      message: "Could not match user to validation code"
-    })
+      message: "Could not match user to validation code",
+    });
   }
 
   await user.update({
     emailVerificationCode: undefined,
-    emailVerified: true
-  })
+    emailVerified: true,
+  });
 
-  return user.sanitize()
-}
+  return user.sanitize();
+};
 
-export const passwordChangeRequest = async (email: string): Promise<SanitizedUserOutput> => {
+export const passwordChangeRequest = async (
+  email: string
+): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
-    where: {email}
-  })
+    where: { email },
+  });
 
   if (!user) {
     return Promise.reject({
-      message: "Could not match user to email"
-    })
+      message: "Could not match user to email",
+    });
   }
 
   const passwordResetCode = crypto.randomBytes(32).toString("hex");
-  await user.update({ passwordResetCode })
+  await user.update({ passwordResetCode });
 
-  return user.sanitize()
-}
+  return user.sanitize();
+};
 
-export const resetPassword = async (email: string, passwordResetCode: string, password: string): Promise<SanitizedUserOutput> => {
+export const resetPassword = async (
+  email: string,
+  passwordResetCode: string,
+  password: string
+): Promise<SanitizedUserOutput> => {
   const user = await User.findOne({
     where: {
       email,
-      passwordResetCode
-    }
-  })
+      passwordResetCode,
+    },
+  });
 
   if (!user) {
     return Promise.reject({
-      message: "Cound not match user to verification code"
-    })
+      message: "Cound not match user to verification code",
+    });
   }
 
-  await user.update({ password })
+  await user.update({ password });
 
-  return user.sanitize()
-}
+  return user.sanitize();
+};

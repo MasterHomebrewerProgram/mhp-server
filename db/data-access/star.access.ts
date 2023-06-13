@@ -1,117 +1,145 @@
-import Star, {StarAttributes, StarInput, Star_User, Star_User_Attributes} from '../models/star.model'
-import User, { UserAttributes } from '../models/user.model'
+import Star, {
+  StarAttributes,
+  StarInput,
+  Star_User,
+  Star_User_Attributes,
+} from "../models/star.model";
+import User, { UserAttributes } from "../models/user.model";
 
-export const getStarMetadataById = async (starId: string): Promise<StarAttributes> => {
+export const getStarMetadataById = async (
+  starId: string
+): Promise<StarAttributes> => {
   const star = await Star.findOne({
-    where: {id: starId}
-  })
+    where: { id: starId },
+  });
 
   if (!star) {
-    return Promise.reject({message: "Could not find star"})
+    return Promise.reject({ message: "Could not find star" });
   }
 
-  return star.get({plain: true})
-}
+  return star.get({ plain: true });
+};
 
-export const getStarMetadataByName = async (starName: string): Promise<StarAttributes> => {
+export const getStarMetadataByName = async (
+  starName: string
+): Promise<StarAttributes> => {
   const star = await Star.findOne({
-    where: {name: starName}
-  })
+    where: { name: starName },
+  });
 
   if (!star) {
-    return Promise.reject({message: "Could not find star"})
+    return Promise.reject({ message: "Could not find star" });
   }
 
-  return star.get({plain: true})
-}
+  return star.get({ plain: true });
+};
 
-export const updateStarMetadata = async (starId: string, starData: StarInput): Promise<StarAttributes> => {
+export const updateStarMetadata = async (
+  starId: string,
+  starData: StarInput
+): Promise<StarAttributes> => {
   const star = await Star.findOne({
-    where: {id: starId}
-  })
+    where: { id: starId },
+  });
 
   if (!star) {
-    return Promise.reject({message: "Could not find star"})
+    return Promise.reject({ message: "Could not find star" });
   }
 
-  starData.id = undefined
+  starData.id = undefined;
 
   await star.update({
-    ...starData
-  })
+    ...starData,
+  });
 
-  return star.get({plain:true})
-}
+  return star.get({ plain: true });
+};
 
-
-
-export const addStarToUser = async (starId: string, userId: string, description: string, approved=false): Promise<UserAttributes & {Club?: StarAttributes}> => {
+export const addStarToUser = async (
+  starId: string,
+  userId: string,
+  description: string,
+  approved = false
+): Promise<UserAttributes & { Club?: StarAttributes }> => {
   const user = await User.count({
-    where: {id: userId}
-  })
+    where: { id: userId },
+  });
 
   if (!user) {
-    return Promise.reject({message: "Could not find user"})
+    return Promise.reject({ message: "Could not find user" });
   }
 
   const star = await Star.count({
-    where: {id: starId}
-  })
+    where: { id: starId },
+  });
 
   if (!star) {
-    return Promise.reject({message: "Could not find club"})
+    return Promise.reject({ message: "Could not find club" });
   }
 
   await Star_User.create({
     //@ts-expect-error StarId not exposed
-    "StarId": starId,
-    "UserId": userId,
+    StarId: starId,
+    UserId: userId,
     description,
-    approved
-  })
+    approved,
+  });
 
   const updatedUser = await User.findOne({
-    where: {id: userId},
+    where: { id: userId },
     include: {
-      model: Star
-    }
-  })
+      model: Star,
+    },
+  });
 
   if (!updatedUser) {
-    return Promise.reject({message: "Could not find user"})
+    return Promise.reject({ message: "Could not find user" });
   }
 
-  return updatedUser.get({plain: true})
-}
+  return updatedUser.get({ plain: true });
+};
 
-export const removeStarFromUser = async (starUserId: string): Promise<boolean> => {
+export const removeStarFromUser = async (
+  starUserId: string
+): Promise<boolean> => {
   const numRemoved = await Star_User.destroy({
-    where: {id: starUserId}
-  })
+    where: { id: starUserId },
+  });
 
-  return numRemoved > 0
-}
+  return numRemoved > 0;
+};
 
-export const approveStarForUser = async (starUserId: string, approverId: string) => {
+export const approveStarForUser = async (
+  starUserId: string,
+  approverId: string
+) => {
   const starUser = await Star_User.findOne({
-    where: {id: starUserId}
-  })
+    where: { id: starUserId },
+  });
 
   if (!starUser) {
-    return Promise.reject({message: "Could not find record of Star with User"})
+    return Promise.reject({
+      message: "Could not find record of Star with User",
+    });
   }
 
   await starUser.update({
     //@ts-expect-error approvedby not exposed
     approvedby: approverId,
-    approved: true
-  })
+    approved: true,
+  });
 
-  return starUser.get({plain: true})
-}
+  return starUser.get({ plain: true });
+};
 
-
-export const getStarsByApprovalState = async (approved=true): Promise<(Star_User_Attributes & {User?: Partial<UserAttributes>, Star?: StarAttributes})[]> => {
+export const getStarsByApprovalState = async (
+  approved = true
+): Promise<
+  (Star_User_Attributes & {
+    User?: Partial<UserAttributes>;
+    Star?: StarAttributes;
+  })[]
+> => {
   const approvedStars = await Star_User.findAll({
     where: {
       approved,
@@ -120,114 +148,138 @@ export const getStarsByApprovalState = async (approved=true): Promise<(Star_User
       {
         model: User,
         include: [
-          'id',
-          'email',
-          'slug',
-          'fname',
-          'lname',
-          'photourl',
-          'address1',
-          'address2',
-          'address3',
-          'city',
-          'province',
-          'postalCode',
-          'country'
-        ]
+          "id",
+          "email",
+          "slug",
+          "fname",
+          "lname",
+          "photourl",
+          "address1",
+          "address2",
+          "address3",
+          "city",
+          "province",
+          "postalCode",
+          "country",
+        ],
       },
       {
-        model: Star
-      }
+        model: Star,
+      },
     ],
     raw: true,
-    nest: true
-  }) 
+    nest: true,
+  });
 
-  return approvedStars
-}
+  return approvedStars;
+};
 
-export const getStarsByShipState = async (shouldShip=true, shipped=false): Promise<(Star_User_Attributes & {User?: Partial<UserAttributes>, Star?: StarAttributes})[]> => {
+export const getStarsByShipState = async (
+  shouldShip = true,
+  shipped = false
+): Promise<
+  (Star_User_Attributes & {
+    User?: Partial<UserAttributes>;
+    Star?: StarAttributes;
+  })[]
+> => {
   const shippable = await Star_User.findAll({
     where: {
       approved: true,
       shipped,
-      shouldShip
+      shouldShip,
     },
     include: [
       {
         model: User,
         include: [
-          'id',
-          'email',
-          'slug',
-          'fname',
-          'lname',
-          'photourl',
-          'address1',
-          'address2',
-          'address3',
-          'city',
-          'province',
-          'postalCode',
-          'country'
-        ]
+          "id",
+          "email",
+          "slug",
+          "fname",
+          "lname",
+          "photourl",
+          "address1",
+          "address2",
+          "address3",
+          "city",
+          "province",
+          "postalCode",
+          "country",
+        ],
       },
       {
-        model: Star
-      }
+        model: Star,
+      },
     ],
     raw: true,
-    nest: true
-  })
+    nest: true,
+  });
 
-  return shippable
-}
+  return shippable;
+};
 
-export const setStarShouldShipStatus = async (starUserId: string, shouldShip=true): Promise<Star_User_Attributes> => {
+export const setStarShouldShipStatus = async (
+  starUserId: string,
+  shouldShip = true
+): Promise<Star_User_Attributes> => {
   const starUser = await Star_User.findOne({
-    where: {id: starUserId}
-  })
+    where: { id: starUserId },
+  });
 
   if (!starUser) {
-    return Promise.reject({message: "Could not find record of Star with User"})
+    return Promise.reject({
+      message: "Could not find record of Star with User",
+    });
   }
 
   await starUser.update({
-    shouldShip
-  })
+    shouldShip,
+  });
 
-  return starUser.get({plain: true})
-}
+  return starUser.get({ plain: true });
+};
 
-export const updateStarShippingStatus = async (starUserId: string, shipped: boolean, tracking?: string): Promise<Star_User_Attributes> => {
+export const updateStarShippingStatus = async (
+  starUserId: string,
+  shipped: boolean,
+  tracking?: string
+): Promise<Star_User_Attributes> => {
   const starUser = await Star_User.findOne({
-    where: {id: starUserId}
-  })
+    where: { id: starUserId },
+  });
 
   if (!starUser) {
-    return Promise.reject({message: "Could not find record of Star with User"})
+    return Promise.reject({
+      message: "Could not find record of Star with User",
+    });
   }
 
   await starUser.update({
     shipped,
-    tracking
-  })
+    tracking,
+  });
 
-  return starUser.get({plain: true})
-}
+  return starUser.get({ plain: true });
+};
 
-export const setStarRecievedStatus = async (starUserId: string, received: boolean): Promise<Star_User_Attributes> => {
+export const setStarRecievedStatus = async (
+  starUserId: string,
+  received: boolean
+): Promise<Star_User_Attributes> => {
   const starUser = await Star_User.findOne({
-    where: {id: starUserId}
-  })
+    where: { id: starUserId },
+  });
 
   if (!starUser) {
-    return Promise.reject({message: "Could not find record of Star with User"})
+    return Promise.reject({
+      message: "Could not find record of Star with User",
+    });
   }
 
   await starUser.update({
-    received
-  })
+    received,
+  });
 
-  return starUser.get({plain: true})
-}
+  return starUser.get({ plain: true });
+};
