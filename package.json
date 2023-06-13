@@ -51,6 +51,6 @@
     "sequelize": "^6.29.3"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "*.{js,css,md,pug}": "prettier --write"
   }
 }
