@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .ts",
     "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "npx lint-staged"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",

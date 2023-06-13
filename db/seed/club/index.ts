@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
-import Club, { ClubAttributes } from '../../models/club.model';
-import Comp, {CompAttributes} from '../../models/comp.model'
+import { faker } from "@faker-js/faker";
+import Club, { ClubAttributes } from "../../models/club.model";
+import Comp, { CompAttributes } from "../../models/comp.model";
 
 const createRandomClub = (): ClubAttributes => {
-  const isPaid = Boolean(Math.round(Math.random()))
+  const isPaid = Boolean(Math.round(Math.random()));
 
   return {
     id: faker.string.uuid(),
@@ -19,15 +19,15 @@ const createRandomClub = (): ClubAttributes => {
     paid: isPaid,
     paymentId: isPaid ? faker.string.uuid() : undefined,
     paymentDate: isPaid ? faker.date.past() : undefined,
-    paymentExpiry: isPaid ? faker.date.future() : undefined
-  }
-}
+    paymentExpiry: isPaid ? faker.date.future() : undefined,
+  };
+};
 
 const createRandomComp = (
   compName = `${faker.company.buzzAdjective} ${faker.company.buzzNoun}`,
   year = 2023,
-  city = faker.location.city(), 
-  province = faker.location.state(), 
+  city = faker.location.city(),
+  province = faker.location.state(),
   country = "US"
 ): CompAttributes => {
   return {
@@ -39,41 +39,51 @@ const createRandomComp = (
     city,
     province,
     country,
-  }
-}
+  };
+};
 
 export const runClubSeeds = async () => {
-  console.log("Seeding Club table...")
+  console.log("Seeding Club table...");
 
-  const clubs = await Club.bulkCreate([
-    ...faker.helpers.multiple(createRandomClub, {
-      count: 5
-    })
-  ], {
-    ignoreDuplicates: true,
-    individualHooks: true
-  })
+  const clubs = await Club.bulkCreate(
+    [
+      ...faker.helpers.multiple(createRandomClub, {
+        count: 5,
+      }),
+    ],
+    {
+      ignoreDuplicates: true,
+      individualHooks: true,
+    }
+  );
 
   await Promise.all(
-    clubs.map(club => {
+    clubs.map((club) => {
       // Create Competitions
-      const compName = `${faker.company.buzzAdjective()} ${faker.company.buzzNoun()}`
-      const allComps = Array(5).fill(null).map((_,idx) => createRandomComp(
-        compName,
-        2023 - idx,
-        club.city,
-        club.province,
-        club.country
-      ))
-      
-      return Comp.bulkCreate(allComps.map(comp => ({
-        ...comp,
-        ClubId: club.id
-      })), {
-        ignoreDuplicates: true
-      })
-    })
-  )
+      const compName = `${faker.company.buzzAdjective()} ${faker.company.buzzNoun()}`;
+      const allComps = Array(5)
+        .fill(null)
+        .map((_, idx) =>
+          createRandomComp(
+            compName,
+            2023 - idx,
+            club.city,
+            club.province,
+            club.country
+          )
+        );
 
-  return clubs
-}
+      return Comp.bulkCreate(
+        allComps.map((comp) => ({
+          ...comp,
+          ClubId: club.id,
+        })),
+        {
+          ignoreDuplicates: true,
+        }
+      );
+    })
+  );
+
+  return clubs;
+};
