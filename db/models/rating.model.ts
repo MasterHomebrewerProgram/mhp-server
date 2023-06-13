@@ -42,7 +42,7 @@ export interface RatingData {
   }
 }
 
-interface RatingAttributes {
+export interface RatingAttributes {
   id: string;
   score: number;
   text?: string;
