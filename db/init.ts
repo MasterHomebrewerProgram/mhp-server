@@ -1,5 +1,17 @@
 import sequelizeConnection from "./config";
 const isDev = process.env.NODE_ENV === "development";
+const args = process.argv.slice(2);
+
+import {
+  runAwardSeeds,
+  runCircuitSeeds,
+  runClubSeeds,
+  runRankSeeds,
+  runRatingSeeds,
+  runStarSeeds,
+  runStyleSeeds,
+  runUserSeeds,
+} from "./seed/index";
 
 import User from "./models/user.model";
 import Club, { Club_User } from "./models/club.model";
@@ -11,6 +23,24 @@ import Star, { Star_User } from "./models/star.model";
 import Comp from "./models/comp.model";
 import Circuit, { Comp_Circuit } from "./models/circuit.model";
 import Rating from "./models/rating.model";
+
+const runSeeds = async (useMockData = false) => {
+  console.log("\nRunning seeds...\n");
+
+  await runAwardSeeds();
+  await runRankSeeds();
+  await runStarSeeds();
+  await runStyleSeeds();
+
+  if (useMockData) {
+    const clubs = await runClubSeeds();
+    await runCircuitSeeds();
+    const users = await runUserSeeds(clubs);
+    await runRatingSeeds(users);
+  }
+
+  console.log("\nDone seeding!\n");
+};
 
 const dbInit = async (isDev = false) => {
   console.log("Initializing DB...");
@@ -61,6 +91,10 @@ const dbInit = async (isDev = false) => {
   await sequelizeConnection.sync({
     force: isDev,
   });
+
+  if (args.includes("--seed")) {
+    await runSeeds(isDev);
+  }
 };
 
 dbInit(isDev);

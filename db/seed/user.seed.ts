@@ -158,10 +158,6 @@ export const runUserSeeds = async (clubs: Club[]) => {
               },
             });
 
-            if (!style) {
-              console.log("MISSING STYLE " + category);
-            }
-
             return await Scoresheet.create({
               score,
               approved: true,
@@ -266,8 +262,6 @@ export const runUserSeeds = async (clubs: Club[]) => {
                 subcat: category.subcat,
               },
             });
-
-            console.log("STYLE", style.id);
 
             return await Scoresheet.create({
               score,
