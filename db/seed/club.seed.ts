@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import Club, { ClubAttributes } from "../../models/club.model";
-import Comp, { CompAttributes } from "../../models/comp.model";
+import Club, { ClubAttributes } from "../models/club.model";
+import Comp, { CompAttributes } from "../models/comp.model";
 
 const createRandomClub = (): ClubAttributes => {
   const isPaid = Boolean(Math.round(Math.random()));

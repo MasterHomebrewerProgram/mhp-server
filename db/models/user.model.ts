@@ -33,9 +33,9 @@ export interface UserAttributes {
   passwordResetCode?: string;
 
   paid: boolean;
-  paymentId: string;
-  paymentDate: Date;
-  paymentExpiry: Date;
+  paymentId?: string;
+  paymentDate?: Date;
+  paymentExpiry?: Date;
 
   createdAt?: Date;
   updatedAt?: Date;

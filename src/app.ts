@@ -5,15 +5,16 @@ import crypto from "crypto";
 import passport from "passport";
 
 import sequelizeConnection from "./../db/config";
-import dbInit from "../db/init";
 import v1 from "./v1";
+
+const isDev = process.env.NODE_ENV === "development";
 
 // Set up persistent sessions
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // Express definitions
 const app = express();
-const port = process.env.NODE_ENV === "development" ? 3000 : 8080;
+const port = isDev ? 3000 : 8080;
 
 // Middleware
 app.set("trust proxy", 1);
@@ -25,7 +26,7 @@ app.use(
         : crypto.randomBytes(32).toString("hex"),
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV !== "development" },
+    cookie: { secure: !isDev },
     store: new SequelizeStore({
       db: sequelizeConnection,
     }),
@@ -35,9 +36,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Sync database
-dbInit();
 
 // API definitions
 app.use(express.static("public"));

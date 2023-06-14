@@ -1,5 +1,5 @@
-import Circuit, { Comp_Circuit } from "../../models/circuit.model";
-import Comp from "../../models/comp.model";
+import Circuit, { Comp_Circuit } from "../models/circuit.model";
+import Comp from "../models/comp.model";
 
 export const runCircuitSeeds = async () => {
   console.log("Seeding Circuit table...");

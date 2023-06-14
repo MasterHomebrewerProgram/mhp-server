@@ -1,4 +1,4 @@
-import Star from "../../models/star.model";
+import Star from "../models/star.model";
 
 export const runStarSeeds = async () => {
   console.log("Seeding Star table...");
