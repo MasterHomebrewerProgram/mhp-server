@@ -1,15 +1,15 @@
 import { faker } from "@faker-js/faker";
-import User, { UserAttributes } from "../../models/user.model";
-import Club, { Club_User } from "../../models/club.model";
-import Rank, { Rank_User } from "../../models/rank.model";
-import Award, { Award_User } from "../../models/award.model";
-import Star, { Star_User } from "../../models/star.model";
-import Scoresheet from "../../models/scoresheet.model";
-import Style, { StyleAttributes } from "../../models/style.model";
+import User, { UserAttributes } from "../models/user.model";
+import Club, { Club_User } from "../models/club.model";
+import Rank, { Rank_User } from "../models/rank.model";
+import Award, { Award_User } from "../models/award.model";
+import Star, { Star_User } from "../models/star.model";
+import Scoresheet from "../models/scoresheet.model";
+import Style, { StyleAttributes } from "../models/style.model";
 
-import categoryList from "../../util/categoryList.util";
-import evalRank from "../../util/evalRank.util";
-import evalAward from "../../util/evalAward.util";
+import categoryList from "../util/categoryList.util";
+import evalRank from "../util/evalRank.util";
+import evalAward from "../util/evalAward.util";
 
 const shuffle = (array) => {
   let currentIndex = array.length,
@@ -83,7 +83,7 @@ const createRandomUser = (): UserAttributes => {
   };
 };
 
-export const runUserSeeds = async (clubs?: Club[]) => {
+export const runUserSeeds = async (clubs: Club[]) => {
   console.log("Seeding User table...");
 
   const allAwards = await Award.findAll();
@@ -158,10 +158,6 @@ export const runUserSeeds = async (clubs?: Club[]) => {
               },
             });
 
-            if (!style) {
-              console.log("MISSING STYLE " + category);
-            }
-
             return await Scoresheet.create({
               score,
               approved: true,
@@ -230,7 +226,7 @@ export const runUserSeeds = async (clubs?: Club[]) => {
 
         const currentCats = Object.keys(
           catStrings.reduce((acc, cat) => {
-            acc[cat.cat] = true;
+            acc[cat.cat as string] = true;
             return acc;
           }, {})
         );
@@ -248,11 +244,11 @@ export const runUserSeeds = async (clubs?: Club[]) => {
           );
 
           catStrings.push(
-            ...remainingCats
+            ...(remainingCats
               .slice(0, numNeeded)
               .map((targetCat) =>
                 categoryList.find((cat) => cat.cat === targetCat)
-              )
+              ) as Partial<StyleAttributes>[])
           );
         }
 
@@ -334,6 +330,10 @@ export const runUserSeeds = async (clubs?: Club[]) => {
             where: { id: userRank.RankId },
           });
 
+          if (!rank) {
+            return Promise.reject();
+          }
+
           const rankProgress = evalRank(scoresheets, rank);
 
           await userRank.update({
@@ -371,6 +371,10 @@ export const runUserSeeds = async (clubs?: Club[]) => {
             //@ts-expect-error RankId not exposed
             where: { id: userAward.AwardId },
           });
+
+          if (!award) {
+            return Promise.reject();
+          }
 
           const awardProgress = evalAward(scoresheets, award);
 

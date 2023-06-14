@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 
-import Rating, { RatingData } from "../../models/rating.model";
-import User from "../../models/user.model";
-import Comp from "../../models/comp.model";
-import sequelizeConnection from "../../config";
+import Rating, { RatingData } from "../models/rating.model";
+import User from "../models/user.model";
+import Comp from "../models/comp.model";
+import sequelizeConnection from "../config";
 
 const generateMockRating = (score: number): RatingData => {
   let currentPoints = score;

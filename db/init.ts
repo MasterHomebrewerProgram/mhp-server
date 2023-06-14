@@ -1,4 +1,7 @@
 import sequelizeConnection from "./config";
+const isDev = process.env.NODE_ENV === "development";
+const args = process.argv.slice(2);
+
 import {
   runAwardSeeds,
   runCircuitSeeds,
@@ -8,8 +11,7 @@ import {
   runStarSeeds,
   runStyleSeeds,
   runUserSeeds,
-} from "./seed";
-const isDev = process.env.NODE_ENV === "development";
+} from "./seed/index";
 
 import User from "./models/user.model";
 import Club, { Club_User } from "./models/club.model";
@@ -22,7 +24,25 @@ import Comp from "./models/comp.model";
 import Circuit, { Comp_Circuit } from "./models/circuit.model";
 import Rating from "./models/rating.model";
 
-const dbInit = async () => {
+const runSeeds = async (useMockData = false) => {
+  console.log("\nRunning seeds...\n");
+
+  await runAwardSeeds();
+  await runRankSeeds();
+  await runStarSeeds();
+  await runStyleSeeds();
+
+  if (useMockData) {
+    const clubs = await runClubSeeds();
+    await runCircuitSeeds();
+    const users = await runUserSeeds(clubs);
+    await runRatingSeeds(users);
+  }
+
+  console.log("\nDone seeding!\n");
+};
+
+const dbInit = async (isDev = false) => {
   console.log("Initializing DB...");
 
   // Set up database relations
@@ -33,7 +53,6 @@ const dbInit = async () => {
   User.hasMany(Scoresheet, { onDelete: "cascade" });
   Scoresheet.belongsTo(User);
   Rank_User.belongsTo(User, {
-    as: "approvedby",
     foreignKey: {
       name: "approvedby",
     },
@@ -42,21 +61,18 @@ const dbInit = async () => {
   Rating.belongsTo(User);
   Rank.belongsToMany(User, { through: Rank_User });
   Rank_User.belongsTo(User, {
-    as: "approvedby",
     foreignKey: {
       name: "approvedby",
     },
   });
   Award.belongsToMany(User, { through: Award_User });
   Award_User.belongsTo(User, {
-    as: "approvedby",
     foreignKey: {
       name: "approvedby",
     },
   });
   Star.belongsToMany(User, { through: Star_User });
   Award_User.belongsTo(User, {
-    as: "approvedby",
     foreignKey: {
       name: "approvedby",
     },
@@ -65,8 +81,8 @@ const dbInit = async () => {
   Scoresheet.belongsTo(Comp);
   Circuit.belongsToMany(Comp, { through: Comp_Circuit });
   Comp.belongsToMany(Circuit, { through: Comp_Circuit });
-  Style.hasMany(Scoresheet);
   Scoresheet.belongsTo(Style);
+  Style.hasMany(Scoresheet);
   Comp.hasMany(Rating);
   Rating.belongsTo(Comp);
 
@@ -76,21 +92,9 @@ const dbInit = async () => {
     force: isDev,
   });
 
-  console.log("\nRunning seeds...\n");
-
-  await runAwardSeeds();
-  await runRankSeeds();
-  await runStarSeeds();
-  await runStyleSeeds();
-
-  if (isDev) {
-    const clubs = await runClubSeeds();
-    await runCircuitSeeds();
-    const users = await runUserSeeds(clubs);
-    await runRatingSeeds(users);
+  if (args.includes("--seed")) {
+    await runSeeds(isDev);
   }
-
-  console.log("\nDone seeding!\n");
 };
 
-export default dbInit;
+dbInit(isDev);
