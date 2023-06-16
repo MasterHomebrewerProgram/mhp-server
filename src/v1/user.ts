@@ -1,5 +1,5 @@
-import express from "express";
-import { UserInput } from "../../db/models";
+import express, { Request } from "express";
+import { SanitizedUserOutput, UserInput } from "../../db/models";
 import {
   getUser,
   registerUser,
@@ -9,7 +9,17 @@ import {
 } from "../../db/data-access";
 const router = express.Router();
 
-router.get("/:userId", async (req, res) => {
+interface RequestWithMiddleware extends Request {
+  user?: SanitizedUserOutput;
+}
+
+interface GetUserRequest extends RequestWithMiddleware {
+  params: {
+    userId: string;
+  };
+}
+
+router.get("/:userId", async (req: GetUserRequest, res) => {
   try {
     const user = await getUser(req.params.userId);
     res.json(user);
@@ -18,8 +28,12 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
-  const userParams: UserInput & { password: string } = req.body;
+interface CreateUserRequest extends Request {
+  body: UserInput & { password: string };
+}
+
+router.post("/create", async (req: CreateUserRequest, res) => {
+  const userParams = req.body;
 
   try {
     const newUser = await registerUser(userParams);
@@ -30,8 +44,12 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/update", async (req, res) => {
-  const userParams: UserInput & { password?: string } = req.body;
+interface UpdateUserRequest extends Request {
+  body: UserInput & { password: string };
+}
+
+router.post("/update", async (req: UpdateUserRequest, res) => {
+  const userParams = req.body;
 
   try {
     const newUser = await updateUser(userParams);
@@ -42,7 +60,13 @@ router.post("/update", async (req, res) => {
   }
 });
 
-router.get("/validate/:key", async (req, res) => {
+interface ValidateUserRequest extends Request {
+  params: {
+    key: string;
+  };
+}
+
+router.get("/validate/:key", async (req: ValidateUserRequest, res) => {
   const validationKey: string = req.params.key;
 
   try {
@@ -54,7 +78,15 @@ router.get("/validate/:key", async (req, res) => {
   }
 });
 
-router.post("/reset", async (req, res) => {
+interface ResetPasswordRequest extends Request {
+  body: {
+    email: string;
+    key: string;
+    password: string;
+  };
+}
+
+router.post("/reset", async (req: ResetPasswordRequest, res) => {
   const { email, key, password } = req.body;
 
   try {
