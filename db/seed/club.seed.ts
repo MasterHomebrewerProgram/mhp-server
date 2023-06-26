@@ -30,12 +30,21 @@ const createRandomComp = (
   province = faker.location.state(),
   country = "US"
 ): CompAttributes => {
+  const futureDate = new Date(
+    Date.now() + 1000 * 60 * 60 * 24 * (30 + 260 * Math.random())
+  );
+
   return {
     id: faker.string.uuid(),
     name: `${year} ${compName}`,
     url: faker.internet.url(),
     description: faker.company.buzzPhrase(),
     photourl: faker.image.urlLoremFlickr(),
+    entryOpenDate: futureDate,
+    entryCloseDate: new Date(futureDate.getTime() + 1000 * 60 * 60 * 24 * 28),
+    ceremonyDate: new Date(
+      futureDate.getTime() + 1000 * 60 * 60 * 24 * (42 + 60 * Math.random())
+    ),
     city,
     province,
     country,
