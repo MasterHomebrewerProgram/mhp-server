@@ -12,6 +12,9 @@ export interface CompAttributes {
   city?: string;
   province?: string;
   country?: string;
+  entryOpenDate?: Date;
+  entryCloseDate?: Date;
+  ceremonyDate?: Date;
 }
 
 export interface CompInput
@@ -30,6 +33,9 @@ class Comp extends Model<CompAttributes, CompInput> implements CompAttributes {
   public city: string;
   public province: string;
   public country: string;
+  public entryOpenDate?: Date;
+  public entryCloseDate?: Date;
+  public ceremonyDate?: Date;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -66,6 +72,15 @@ Comp.init(
     },
     country: {
       type: DataTypes.TEXT,
+    },
+    entryOpenDate: {
+      type: DataTypes.DATE,
+    },
+    entryCloseDate: {
+      type: DataTypes.DATE,
+    },
+    ceremonyDate: {
+      type: DataTypes.DATE,
     },
   },
   {
