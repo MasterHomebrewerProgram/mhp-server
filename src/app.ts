@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import crypto from "crypto";
 import passport from "passport";
+import cors from "cors";
 
 import sequelizeConnection from "./../db/config";
 import v1 from "./v1";
@@ -36,6 +37,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+if (isDev) {
+  // Enable cross-origin requests for dev (useful for localhost)
+  app.use(cors());
+}
 
 // API definitions
 app.use(express.static("public"));
