@@ -42,6 +42,11 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+if (isDev) {
+  // Enable cross-origin requests for dev (useful for localhost)
+  app.use(cors());
+}
+
 // API definitions
 app.use(express.static("public"));
 app.use("/api/v1", v1);
