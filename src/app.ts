@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import crypto from "crypto";
 import passport from "passport";
+import cors from "cors";
 
 import sequelizeConnection from "./../db/config";
 import v1 from "./v1";
@@ -14,9 +15,12 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // Express definitions
 const app = express();
-const port = isDev ? 3000 : 8080;
+const port = isDev ? 5000 : 8080;
 
 // Middleware
+if (isDev) {
+  app.use(cors());
+}
 app.set("trust proxy", 1);
 app.use(
   session({
@@ -32,6 +36,7 @@ app.use(
     }),
   })
 );
+sequelizeConnection.sync();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
