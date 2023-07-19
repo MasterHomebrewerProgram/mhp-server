@@ -60,7 +60,6 @@ export interface UserOutput extends Required<UserAttributes> {}
 export type SanitizedUserOutput = Omit<
   UserOutput,
   | "password"
-  | "adminLevel"
   | "emailVerificationCode"
   | "passwordResetCode"
   | "paymentId"
@@ -224,7 +223,6 @@ User.prototype.sanitize = async function (): Promise<SanitizedUserOutput> {
   const user: UserOutput = await this.get({ plain: true });
 
   delete user.password;
-  delete user.adminLevel;
   delete user.emailVerificationCode;
   delete user.passwordResetCode;
   delete user.createdAt;
