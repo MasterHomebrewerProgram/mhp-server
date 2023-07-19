@@ -46,7 +46,7 @@ const adminUser = {
   country: "US",
 
   password: "password",
-  adminLevel: 0,
+  adminLevel: 10000,
   emailVerified: true,
 
   paid: true,
