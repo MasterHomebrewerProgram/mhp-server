@@ -11,6 +11,7 @@ router.get("/logout", async (req, res) => {
         throw err;
       }
     });
+    res.json({ user: null });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err });
