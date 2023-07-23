@@ -15,8 +15,8 @@ let devSpacesSecret = process.env.SPACES_SECRET;
 if (process.env.NODE_ENV === "development") {
   bucketEndpoint = "http://127.0.0.1:9444/";
   bucketRegion = "us-east-1";
-  devSpacesKey = "AKIAIOSFODNN7EXAMPLE";
-  devSpacesSecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+  devSpacesKey = "AKIAIOSFODNN7EXAMPLE"; // Change this to match "Access Key" at http://localhost:9444/ui
+  devSpacesSecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"; // Change this to match "Secret Key" at http://localhost:9444/ui
 }
 
 const buckets = ["scoresheets", "avatars", "awards", "stls"] as const;
