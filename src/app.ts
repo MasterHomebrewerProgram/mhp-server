@@ -6,9 +6,13 @@ import passport from "passport";
 import cors from "cors";
 
 import sequelizeConnection from "./../db/config";
+import { initS3 } from "../s3";
 import v1 from "./v1";
 
 const isDev = process.env.NODE_ENV === "development";
+
+// Initialize Buckets
+initS3();
 
 // Set up persistent sessions
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
