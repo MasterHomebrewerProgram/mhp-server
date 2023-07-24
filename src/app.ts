@@ -8,6 +8,7 @@ import cors from "cors";
 import sequelizeConnection from "./../db/config";
 import { initS3 } from "../s3";
 import v1 from "./v1";
+import { dbInit } from "../db/init";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -40,7 +41,8 @@ app.use(
     }),
   })
 );
-sequelizeConnection.sync();
+// sequelizeConnection.sync();
+dbInit(false);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());

@@ -42,7 +42,7 @@ const runSeeds = async (useMockData = false) => {
   console.log("\nDone seeding!\n");
 };
 
-const dbInit = async (isDev = false) => {
+export const dbInit = async (isDev = false) => {
   console.log("Initializing DB...");
 
   // Set up database relations
