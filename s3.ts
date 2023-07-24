@@ -97,4 +97,10 @@ const generateSignedDownloadUrl = async (bucketParams: {
   return url;
 };
 
-export { s3Client, initS3, generateSignedUploadUrl, generateSignedDownloadUrl };
+export {
+  s3Client,
+  initS3,
+  generateSignedUploadUrl,
+  generateSignedDownloadUrl,
+  ContentType,
+};

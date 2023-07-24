@@ -64,13 +64,13 @@ export const approveScoresheet = async (
 };
 
 export const updateScoresheet = async (
-  scoresheetData: ScoresheetInput
+  scoresheetData: Partial<ScoresheetInput>
 ): Promise<ScoresheetAttributes & { User?: User; Approver?: User }> => {
   scoresheetData.approvedby = undefined;
 
   const scoresheet = await Scoresheet.findOne({
     where: { id: scoresheetData.id },
-    include: userFkOptions,
+    // include: userFkOptions,
   });
 
   if (!scoresheet) {

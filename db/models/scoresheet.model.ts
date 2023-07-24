@@ -1,5 +1,8 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, ForeignKey, Model, Optional } from "sequelize";
 import sequelizeConnection from "../config";
+import User from "./user.model";
+import Style from "./style.model";
+import Comp from "./comp.model";
 
 export interface ScoresheetAttributes {
   id: string;
@@ -29,6 +32,10 @@ class Scoresheet
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
+
+  declare UserId: ForeignKey<User["id"]>;
+  declare StyleId: ForeignKey<Style["id"]>;
+  declare CompId: ForeignKey<Comp["id"]>;
 }
 
 Scoresheet.init(
