@@ -56,6 +56,5 @@ $(document).ready(() => {
 
   $("#logout").click(async () => {
     const res = await fetch("/api/v1/auth/logout");
-    console.log("LOGOUT STATUS", res.status);
   });
 });
