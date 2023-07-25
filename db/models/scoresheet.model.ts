@@ -8,6 +8,9 @@ export interface ScoresheetAttributes {
   id: string;
   score: number;
   notes: string;
+  place?: number;
+  bosPlace?: number;
+  otherAward?: string;
   approved: boolean;
   approvedby: string;
   s3: string;
@@ -27,6 +30,9 @@ class Scoresheet
   public id!: string;
   public score: number;
   public notes: string;
+  public place: number;
+  public bosPlace: number;
+  public otherAward: string;
   public approved: boolean;
   public approvedby: string;
   public s3: string;
@@ -52,6 +58,15 @@ Scoresheet.init(
       type: DataTypes.INTEGER,
     },
     notes: {
+      type: DataTypes.TEXT,
+    },
+    place: {
+      type: DataTypes.INTEGER,
+    },
+    bosPlace: {
+      type: DataTypes.INTEGER,
+    },
+    otherAward: {
       type: DataTypes.TEXT,
     },
     approved: {
