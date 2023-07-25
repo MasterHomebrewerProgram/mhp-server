@@ -16,7 +16,7 @@ export interface StyleAttributes {
 export interface StyleInput extends Optional<StyleAttributes, "id"> {}
 export interface StyleOutput extends Required<StyleAttributes> {}
 
-class Style
+export class Style
   extends Model<StyleAttributes, StyleInput>
   implements StyleAttributes
 {

@@ -97,4 +97,6 @@ export const dbInit = async (isDev = false) => {
   }
 };
 
-dbInit(isDev);
+if (args.includes("--seed")) {
+  dbInit(isDev);
+}

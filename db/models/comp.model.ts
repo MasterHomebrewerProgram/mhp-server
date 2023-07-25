@@ -24,7 +24,10 @@ export interface CompInput
   > {}
 export interface CompOutput extends Required<CompAttributes> {}
 
-class Comp extends Model<CompAttributes, CompInput> implements CompAttributes {
+export class Comp
+  extends Model<CompAttributes, CompInput>
+  implements CompAttributes
+{
   public id!: string;
   public name!: string;
   public url: string;
