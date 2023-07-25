@@ -7,6 +7,7 @@ import Comp from "./comp.model";
 export interface ScoresheetAttributes {
   id: string;
   score: number;
+  notes: string;
   approved: boolean;
   approvedby: string;
   s3: string;
@@ -25,6 +26,7 @@ class Scoresheet
 {
   public id!: string;
   public score: number;
+  public notes: string;
   public approved: boolean;
   public approvedby: string;
   public s3: string;
@@ -48,6 +50,9 @@ Scoresheet.init(
     },
     score: {
       type: DataTypes.INTEGER,
+    },
+    notes: {
+      type: DataTypes.TEXT,
     },
     approved: {
       type: DataTypes.BOOLEAN,

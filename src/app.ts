@@ -43,6 +43,7 @@ app.use(
 );
 // sequelizeConnection.sync();
 dbInit(false);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
