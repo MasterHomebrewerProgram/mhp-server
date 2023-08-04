@@ -1,5 +1,7 @@
 import Star from "../models/star.model";
 
+const basePath = "./images/stars";
+
 export const runStarSeeds = async () => {
   console.log("Seeding Star table...");
 
@@ -16,7 +18,7 @@ export const runStarSeeds = async () => {
       return Star.create({
         name,
         description: name,
-        photourl: "",
+        photourl: `${basePath}/${name}.png`,
       });
     })
   );

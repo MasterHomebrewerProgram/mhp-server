@@ -35,7 +35,14 @@ export const getUser = async (userId: string): Promise<SanitizedUserOutput> => {
       },
       {
         model: Rank,
-        attributes: ["id", "name", "description", "photourl", "stl"],
+        attributes: [
+          "id",
+          "name",
+          "description",
+          "photourl",
+          "stl",
+          "priority",
+        ],
       },
       {
         model: Star,

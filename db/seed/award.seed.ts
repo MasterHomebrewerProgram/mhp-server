@@ -1,6 +1,8 @@
 import Award from "../models/award.model";
 import categoryList from "../util/categoryList.util";
 
+const basePath = "./images/awards";
+
 export const runAwardSeeds = async () => {
   console.log("Seeding Award table...");
 
@@ -8,6 +10,7 @@ export const runAwardSeeds = async () => {
     [
       {
         name: "Braumeister",
+        photourl: `${basePath}/Braumeister.png`,
         description:
           "10 or more beers of different subcategories with 43+ scoresheets of German/Austrian/Polish/Czechia origin",
         minScore: 43,
@@ -44,6 +47,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Ace American Aler",
+        photourl: `${basePath}/Ace American.png`,
         description:
           "10 or more beers of different subcategories with 43+ scoresheets of American origin",
         minScore: 43,
@@ -85,6 +89,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Phénomène Brasseur",
+        photourl: `${basePath}/Phenomene Brasseur.png`,
         description:
           "10 or more beers or ciders of different subcategories with 43+ scoresheets with Belgian/Dutch/French origin",
         minScore: 43,
@@ -113,6 +118,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Cask Crusader",
+        photourl: `${basePath}/Cask Crusader.png`,
         description:
           "10 or more beers or ciders of different subcategories with 43+ scoresheets of English/Irish/Scottish origin",
         minScore: 43,
@@ -146,6 +152,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Prince of Pucker",
+        photourl: `${basePath}/Prince of Pucker.png`,
         description:
           "7 or more beers of different subcategories with 43+ scoresheets that are sours or mixed fermentation",
         minScore: 43,
@@ -167,6 +174,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Lord of Lager",
+        photourl: `${basePath}/Lord of Lager.png`,
         description:
           "10 or more beers of different subcategories with 43+ scoresheets that are lagers",
         minScore: 43,
@@ -204,6 +212,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Master of Mead",
+        photourl: `${basePath}/Master of Mead.png`,
         description:
           "7 or more meads of different mead subcategories with 43+ scoresheets",
         minScore: 43,
@@ -213,7 +222,8 @@ export const runAwardSeeds = async () => {
           .map((category) => category.cat + category.subcat),
       },
       {
-        name: "Master of Mead",
+        name: "Exalted Master of Mead",
+        photourl: `${basePath}/Exalted Master of Mead.png`,
         description:
           "1 scoresheet of 43+ score or higher for every sub-category of Mead",
         minScore: 43,
@@ -226,6 +236,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Cidermaster",
+        photourl: `${basePath}/Cidermaster.png`,
         description:
           "5 or more ciders of different cider subcategories with 43+ scoresheets",
         minScore: 43,
@@ -236,6 +247,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Exalted Cidermaster",
+        photourl: `${basePath}/Exalted Cidermaster.png`,
         description:
           "1 scoresheet of 43+ score or higher for every sub-category of Cider",
         minScore: 43,
@@ -248,6 +260,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Hero of Hops",
+        photourl: `${basePath}/Hero of Hops.png`,
         description:
           "7 or more IPAS of different subcategories with 43+ scoresheets",
         minScore: 43,
@@ -268,6 +281,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Exalted Hero of Hops",
+        photourl: `${basePath}/Exalted Hero of Hops.png`,
         description:
           "1 scoresheet of 43+ score or higher for every IPA sub-category",
         minScore: 43,
@@ -288,6 +302,7 @@ export const runAwardSeeds = async () => {
       },
       {
         name: "Jack of All Trades",
+        photourl: `${basePath}/Jack of All Trades.png`,
         description:
           "1 scoresheet in each category of beer/mead/cider with a minimum score of 30",
         minScore: 30,
