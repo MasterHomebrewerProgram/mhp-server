@@ -34,7 +34,7 @@ class Scoresheet
   public bosPlace: number;
   public otherAward: string;
   public approved: boolean;
-  public approvedby: string;
+  declare approvedby: ForeignKey<User["id"]>;
   public s3: string;
 
   public readonly createdAt!: Date;
