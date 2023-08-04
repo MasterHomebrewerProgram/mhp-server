@@ -55,6 +55,30 @@ const adminUser = {
   paymentExpiry: faker.date.future(),
 };
 
+const approverUser = {
+  id: faker.string.uuid(),
+  email: "approver@gmail.com",
+  slug: "approver",
+  fname: "Approver",
+  lname: "User",
+  photourl: faker.image.urlLoremFlickr(),
+  bio: faker.person.bio(),
+  address1: faker.location.streetAddress(),
+  city: faker.location.city(),
+  province: faker.location.state(),
+  postalCode: faker.location.zipCode(),
+  country: "US",
+
+  password: "password",
+  adminLevel: 100,
+  emailVerified: true,
+
+  paid: true,
+  paymentId: faker.string.uuid(),
+  paymentDate: faker.date.past(),
+  paymentExpiry: faker.date.future(),
+};
+
 const createRandomUser = (): UserAttributes => {
   const isPaid = Boolean(Math.round(Math.random()));
 
@@ -95,6 +119,7 @@ export const runUserSeeds = async (clubs: Club[]) => {
         count: 50,
       }),
       adminUser,
+      approverUser,
     ],
     {
       ignoreDuplicates: true,
@@ -290,9 +315,12 @@ export const runUserSeeds = async (clubs: Club[]) => {
                 },
               });
 
+              const approved = Boolean(Math.round(Math.random()));
+
               return await Scoresheet.create({
                 score,
-                approved: Boolean(Math.round(Math.random())),
+                approved,
+                approvedby: approved ? approverUser.id : undefined,
 
                 //@ts-expect-error StyleId not exposed
                 StyleId: style.id,
