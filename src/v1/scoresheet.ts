@@ -2,6 +2,7 @@ import express, { Request } from "express";
 import { SanitizedUserOutput, ScoresheetInput } from "../../db/models";
 import { ContentType, generateSignedUploadUrl } from "../../s3";
 import Scoresheet from "../../db/models/scoresheet.model";
+import { getUserScoresheets } from "../../db/data-access";
 
 const router = express.Router();
 
@@ -12,6 +13,20 @@ interface CreateScoresheetRequest extends Request {
     CompId: string;
   };
 }
+
+router.get("/currentuser", async (req, res) => {
+  const user = req.user as SanitizedUserOutput;
+
+  try {
+    const scoresheets = await getUserScoresheets(user.id);
+    res.json({
+      scoresheets,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err });
+  }
+});
 
 router.post("/upload", async (req: CreateScoresheetRequest, res) => {
   const user = req.user as SanitizedUserOutput;

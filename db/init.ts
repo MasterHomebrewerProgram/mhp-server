@@ -52,7 +52,8 @@ export const dbInit = async (isDev = false) => {
   User.belongsToMany(Star, { through: Star_User });
   User.hasMany(Scoresheet, { onDelete: "cascade" });
   Scoresheet.belongsTo(User);
-  Rank_User.belongsTo(User, {
+  Scoresheet.belongsTo(User, {
+    as: "Approver",
     foreignKey: {
       name: "approvedby",
     },
@@ -72,7 +73,7 @@ export const dbInit = async (isDev = false) => {
     },
   });
   Star.belongsToMany(User, { through: Star_User });
-  Award_User.belongsTo(User, {
+  Star_User.belongsTo(User, {
     foreignKey: {
       name: "approvedby",
     },
@@ -91,12 +92,11 @@ export const dbInit = async (isDev = false) => {
   await sequelizeConnection.sync({
     force: isDev,
   });
-
-  if (args.includes("--seed")) {
-    await runSeeds(isDev);
-  }
 };
 
 if (args.includes("--seed")) {
-  dbInit(isDev);
+  (async () => {
+    await dbInit(isDev);
+    await runSeeds(isDev);
+  })();
 }

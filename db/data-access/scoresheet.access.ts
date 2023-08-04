@@ -1,18 +1,40 @@
+import { Sequelize } from "sequelize";
 import Scoresheet, {
   ScoresheetAttributes,
   ScoresheetInput,
 } from "../models/scoresheet.model";
 import User, { UserAttributes } from "../models/user.model";
+import { Style } from "../models";
+
+const approverAttributes = {
+  model: User,
+  as: "Approver",
+  foreignKey: "approvedby",
+  attributes: ["id", "slug", "fname", "lname", "photoUrl"],
+};
+
+const styleAttributes = {
+  model: Style,
+};
 
 const userFkOptions = [
-  {
-    model: User,
-    as: "Approver",
-    foreignKey: "approvedby",
-    include: ["id", "slug", "fname", "lname", "photoUrl"],
-  },
-  { model: User, include: ["id", "slug", "fname", "lname", "photoUrl"] },
+  approverAttributes,
+  { model: User, attributes: ["id", "slug", "fname", "lname", "photoUrl"] },
 ];
+
+export const getUserScoresheets = async (
+  userId: string
+): Promise<(ScoresheetAttributes & { Approver?: UserAttributes })[]> => {
+  const scoresheets = await Scoresheet.findAll({
+    //@ts-ignore
+    where: { UserId: userId },
+    include: [approverAttributes, styleAttributes],
+  });
+
+  return scoresheets.map((scoresheet) => {
+    return scoresheet.get({ plain: true });
+  });
+};
 
 export const getScoresheet = async (
   scoresheetId: string
