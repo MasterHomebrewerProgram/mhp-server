@@ -1,5 +1,6 @@
-import { DataTypes, Model, Optional, Sequelize } from "sequelize";
+import { DataTypes, ForeignKey, Model, Optional, Sequelize } from "sequelize";
 import sequelizeConnection from "../config";
+import User from "./user.model";
 
 export interface RankAttributes {
   id: string;
@@ -130,6 +131,7 @@ export interface Rank_User_Attributes {
   achievedAt: Date;
   requirements?: RankProgress["requirements"];
   approved: boolean;
+  approvedby: string;
   shouldShip: boolean;
   shipped?: boolean;
   tracking?: string;
@@ -145,10 +147,14 @@ export class Rank_User
   public achievedAt: Date;
   public requirements: RankProgress["requirements"];
   public approved!: boolean;
+  declare approvedby: ForeignKey<User["id"]>;
   public shouldShip!: boolean;
   public shipped: boolean;
   public tracking: string;
   public received: boolean;
+
+  declare UserId: ForeignKey<User["id"]>;
+  declare RankId: ForeignKey<Rank["id"]>;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -175,6 +181,9 @@ Rank_User.init(
     },
     approved: {
       type: DataTypes.BOOLEAN,
+    },
+    approvedby: {
+      type: DataTypes.UUID,
     },
     shouldShip: {
       type: DataTypes.BOOLEAN,

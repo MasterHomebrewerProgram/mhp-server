@@ -130,7 +130,6 @@ export const approveRankForUser = async (
   }
 
   await rankUser.update({
-    //@ts-expect-error approvedby not exposed
     approvedby: approverId,
     approved: true,
   });

@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-import Award from "../models/award.model";
+import Award, { Award_User } from "../models/award.model";
 import Rank from "../models/rank.model";
 import Star from "../models/star.model";
 import User, { SanitizedUserOutput, UserInput } from "../models/user.model";

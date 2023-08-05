@@ -152,6 +152,8 @@ export const runUserSeeds = async (clubs: Club[]) => {
 
             return await Star_User.create({
               description: faker.company.catchPhrase(),
+              approved: true,
+              approvedby: approverUser.id,
               //@ts-expect-error StarId not exposed
               StarId: stars[randomId].id,
               UserId: user.id,
@@ -354,7 +356,6 @@ export const runUserSeeds = async (clubs: Club[]) => {
           })) as (Scoresheet & { Style: Style })[];
 
           const rank = await Rank.findOne({
-            //@ts-expect-error RankId not exposed
             where: { id: userRank.RankId },
           });
 
@@ -366,6 +367,8 @@ export const runUserSeeds = async (clubs: Club[]) => {
 
           await userRank.update({
             achieved: rankProgress.achieved,
+            approved: rankProgress.achieved,
+            approvedby: rankProgress.achieved ? approverUser.id : undefined,
             achievedAt: rankProgress.achieved ? new Date() : undefined,
             requirements: rankProgress.requirements,
           });
@@ -396,7 +399,6 @@ export const runUserSeeds = async (clubs: Club[]) => {
           })) as (Scoresheet & { Style: Style })[];
 
           const award = await Award.findOne({
-            //@ts-expect-error RankId not exposed
             where: { id: userAward.AwardId },
           });
 
@@ -408,6 +410,8 @@ export const runUserSeeds = async (clubs: Club[]) => {
 
           await userAward.update({
             achieved: awardProgress.achieved,
+            approved: awardProgress.achieved,
+            approvedby: awardProgress.achieved ? approverUser.id : undefined,
             achievedAt: awardProgress.achieved ? new Date() : undefined,
             requirements: awardProgress.requirements,
           });
