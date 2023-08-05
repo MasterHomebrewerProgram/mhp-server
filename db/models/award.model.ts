@@ -1,7 +1,8 @@
-import { DataTypes, Model, Optional, Sequelize } from "sequelize";
+import { DataTypes, ForeignKey, Model, Optional, Sequelize } from "sequelize";
 import sequelizeConnection from "../config";
 import Scoresheet from "./scoresheet.model";
 import Style from "./style.model";
+import User from "./user.model";
 
 export interface AwardAttributes {
   id: string;
@@ -101,6 +102,7 @@ export interface Award_User_Attributes {
   achievedAt: Date;
   requirements?: AwardProgress["requirements"];
   approved: boolean;
+  approvedby: string;
   shouldShip: boolean;
   shipped?: boolean;
   tracking?: string;
@@ -116,10 +118,14 @@ export class Award_User
   public achievedAt: Date;
   public requirements: AwardProgress["requirements"];
   public approved!: boolean;
+  declare approvedby: ForeignKey<User["id"]>;
   public shouldShip!: boolean;
   public shipped: boolean;
   public tracking: string;
   public received: boolean;
+
+  declare UserId: ForeignKey<User["id"]>;
+  declare AwardId: ForeignKey<Award["id"]>;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -146,6 +152,9 @@ Award_User.init(
     },
     approved: {
       type: DataTypes.BOOLEAN,
+    },
+    approvedby: {
+      type: DataTypes.UUID,
     },
     shouldShip: {
       type: DataTypes.BOOLEAN,

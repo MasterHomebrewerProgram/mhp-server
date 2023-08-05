@@ -62,18 +62,21 @@ export const dbInit = async (isDev = false) => {
   Rating.belongsTo(User);
   Rank.belongsToMany(User, { through: Rank_User });
   Rank_User.belongsTo(User, {
+    as: "Approver",
     foreignKey: {
       name: "approvedby",
     },
   });
   Award.belongsToMany(User, { through: Award_User });
   Award_User.belongsTo(User, {
+    as: "Approver",
     foreignKey: {
       name: "approvedby",
     },
   });
   Star.belongsToMany(User, { through: Star_User });
   Star_User.belongsTo(User, {
+    as: "Approver",
     foreignKey: {
       name: "approvedby",
     },

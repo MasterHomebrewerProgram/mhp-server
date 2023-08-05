@@ -130,7 +130,6 @@ export const approveAwardForUser = async (
   }
 
   await awardUser.update({
-    //@ts-expect-error approvedby not exposed
     approvedby: approverId,
     approved: true,
   });

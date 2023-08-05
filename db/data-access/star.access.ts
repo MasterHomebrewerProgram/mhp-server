@@ -124,7 +124,6 @@ export const approveStarForUser = async (
   }
 
   await starUser.update({
-    //@ts-expect-error approvedby not exposed
     approvedby: approverId,
     approved: true,
   });

@@ -1,5 +1,6 @@
-import { DataTypes, Model, Optional, Sequelize } from "sequelize";
+import { DataTypes, ForeignKey, Model, Optional, Sequelize } from "sequelize";
 import sequelizeConnection from "../config";
+import User from "./user.model";
 
 export interface StarAttributes {
   id: string;
@@ -58,6 +59,7 @@ export interface Star_User_Attributes {
   id: string;
   description: string;
   approved: boolean;
+  approvedby: string;
   shouldShip: boolean;
   shipped?: boolean;
   tracking?: string;
@@ -71,10 +73,14 @@ export class Star_User
   public id!: string;
   public description!: string;
   public approved!: boolean;
+  declare approvedby: ForeignKey<User["id"]>;
   public shouldShip!: boolean;
   public shipped: boolean;
   public tracking: string;
   public received: boolean;
+
+  declare UserId: ForeignKey<User["id"]>;
+  declare StarId: ForeignKey<Star["id"]>;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -95,6 +101,9 @@ Star_User.init(
     },
     approved: {
       type: DataTypes.BOOLEAN,
+    },
+    approvedby: {
+      type: DataTypes.UUID,
     },
     shouldShip: {
       type: DataTypes.BOOLEAN,
